@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from 'src/guards/auth.guard';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { JournalComponent } from './home/journal/journal.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: '*', redirectTo: '' },
+  {
+    path: '',
+    component: HomeComponent,
+    children: [{ path: 'journal', component: JournalComponent }],
+  },
+  { path: '*', redirectTo: 'journal' },
 ];
 
 @NgModule({

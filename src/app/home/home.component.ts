@@ -1,8 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+
+interface Tab {
+  label: string;
+  route: string;
+  disabled: boolean;
+}
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.component.html',
   styleUrls: ['home.component.scss'],
 })
-export class HomeComponent {}
+export class HomeComponent implements OnInit {
+  activeTab: Tab = { label: '', route: '', disabled: true };
+  tabs: Tab[] = [
+    { label: 'Journal', route: 'journal', disabled: false },
+    { label: 'In progress...', route: '', disabled: true },
+  ];
+
+  constructor(private route: ActivatedRoute, private router: Router) {}
+
+  ngOnInit() {
+    this.activeTab = { label: 'Journal', route: 'journal', disabled: false };
+  }
+}
