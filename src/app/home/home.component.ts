@@ -15,13 +15,18 @@ interface Tab {
 export class HomeComponent implements OnInit {
   activeTab: Tab = { label: '', route: '', disabled: true };
   tabs: Tab[] = [
-    { label: 'Journal', route: 'journal', disabled: false },
-    { label: 'In progress...', route: '', disabled: true },
+    { label: 'Journal', route: '/journal', disabled: false },
+    { label: 'In progress...', route: '/', disabled: true },
   ];
 
   constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.activeTab = { label: 'Journal', route: 'journal', disabled: false };
+    this.navigate(this.tabs[0]);
+  }
+
+  private navigate(tab: Tab) {
+    this.activeTab = tab;
+    this.router.navigateByUrl(tab.route);
   }
 }
