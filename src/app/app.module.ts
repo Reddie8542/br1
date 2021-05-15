@@ -14,9 +14,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HomeComponent } from './home/home.component';
 import { JournalComponent } from './home/journal/journal.component';
+import { SafePipe } from 'src/pipes/safe.pipe';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, JournalComponent],
+  declarations: [AppComponent, HomeComponent, JournalComponent, SafePipe],
   imports: [
     AppRoutingModule,
     BrowserModule,
