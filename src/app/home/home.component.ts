@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Profile } from 'src/models/profile.model';
 
 interface Tab {
   label: string;
@@ -14,6 +15,12 @@ interface Tab {
 })
 export class HomeComponent implements OnInit {
   activeTab: Tab = { label: '', route: '', disabled: true };
+  profile: Profile = {
+    firstname: 'Bruno',
+    lastname: 'Alva',
+    description:
+      'Me gustaría no dejarte vacía - pequeña amiga "descripción" - pero al mismo tiempo no se me ocurre qué escribir...',
+  };
   tabs: Tab[] = [
     { label: 'Journal', route: '/journal', disabled: false },
     { label: 'In progress...', route: '/', disabled: true },

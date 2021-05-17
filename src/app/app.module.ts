@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -23,6 +24,7 @@ import { SafePipe } from 'src/pipes/safe.pipe';
     BrowserModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatCardModule,
     MatDatepickerModule,
     MatFormFieldModule,
     MatIconModule,

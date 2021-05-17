@@ -1,6 +1,6 @@
 <header>
-  <mat-toolbar color="primary">
-    <span>Br1</span>
+  <mat-toolbar>
+    <!-- <span>Br1</span> -->
     <span class="spacer"></span>
     <button mat-icon-button aria-label="Sign in">
       <mat-icon>login</mat-icon>
@@ -8,6 +8,13 @@
   </mat-toolbar>
 </header>
 <main class="container">
+  <div class="row center">
+    <div class="profile-picture">
+      <img src="assets/images/profilePic.jpeg" alt="Br1" />
+    </div>
+    <h2>{{ profile.firstname + " " + profile.lastname }}</h2>
+    <mat-hint>{{ profile.description }}</mat-hint>
+  </div>
   <nav mat-tab-nav-bar mat-align-tabs="center">
     <ng-container *ngFor="let tab of tabs">
       <a mat-tab-link [routerLink]="tab.route" [disabled]="tab.disabled" [active]="tab.route === activeTab.route">
