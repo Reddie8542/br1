@@ -52,3 +52,16 @@ body {
 .row {
   width: 100%;
 }
+
+.cdk-overlay-container {
+  position: static;
+
+  .cdk-overlay-backdrop {
+    background-color: transparent;
+  }
+
+  .cdk-global-overlay-wrapper {
+    align-items: start !important;
+    position: static;
+  }
+}

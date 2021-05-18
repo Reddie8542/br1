@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   };
   tabs: Tab[] = [
     { label: 'Journal', route: '/journal', disabled: false },
-    { label: 'In progress...', route: '/', disabled: true },
+    // { label: 'In progress...', route: '/', disabled: true },
   ];
 
   constructor(private route: ActivatedRoute, private router: Router) {}
