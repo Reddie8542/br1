@@ -2,23 +2,23 @@
   <div class="row actions">
     <div class="container actions-left">
       <button
-        mat-flat-button
+        mat-stroked-button
         color="primary"
         mwlCalendarPreviousView
         [view]="view"
         [(viewDate)]="openedDate"
-        (viewDateChange)="onViewDateChange()"
+        (viewDateChange)="isTodayOpen = false"
       >
         Previous
       </button>
-      <button mat-flat-button color="primary" mwlCalendarToday [(viewDate)]="openedDate">Today</button>
+      <button mat-stroked-button color="primary" mwlCalendarToday [(viewDate)]="openedDate">Today</button>
       <button
-        mat-flat-button
+        mat-stroked-button
         color="primary"
         mwlCalendarNextView
         [view]="view"
         [(viewDate)]="openedDate"
-        (viewDateChange)="onViewDateChange()"
+        (viewDateChange)="isTodayOpen = false"
       >
         Next
       </button>
@@ -31,11 +31,9 @@
     <mwl-calendar-month-view
       [viewDate]="openedDate"
       [events]="events"
-      [refresh]="refresh"
       [activeDayIsOpen]="isTodayOpen"
       (dayClicked)="onDayClick($event)"
       (eventClicked)="onEventClick($event)"
-      (eventTimesChanged)="eventTimesChanged($event)"
     >
     </mwl-calendar-month-view>
   </div>
