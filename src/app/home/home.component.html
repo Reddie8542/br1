@@ -15,12 +15,16 @@
     <h2>{{ profile.firstname + " " + profile.lastname }}</h2>
     <mat-hint>{{ profile.description }}</mat-hint>
   </div>
-  <nav mat-tab-nav-bar mat-align-tabs="center">
-    <ng-container *ngFor="let tab of tabs">
-      <a mat-tab-link [routerLink]="tab.route" [disabled]="tab.disabled" [active]="tab.route === activeTab.route">
-        {{ tab.label }}
-      </a>
-    </ng-container>
+  <nav mat-tab-nav-bar mat-align-tabs="left">
+    <a
+      *ngFor="let tab of tabs"
+      mat-tab-link
+      [disabled]="tab.disabled"
+      [active]="tab.route === activeTab.route"
+      (click)="onTabClick(tab)"
+    >
+      {{ tab.label }}
+    </a>
   </nav>
   <router-outlet></router-outlet>
 </main>
