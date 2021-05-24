@@ -1,7 +1,9 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import "~@angular/material/theming";
+
 // Plus imports for other components in your app.
+@import "../node_modules/angular-calendar/css/angular-calendar.css";
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -53,15 +55,15 @@ body {
   width: 100%;
 }
 
-.cdk-overlay-container {
-  position: static;
+// .cdk-overlay-container {
+//   position: static;
 
-  .cdk-overlay-backdrop {
-    background-color: transparent;
-  }
+//   .cdk-overlay-backdrop {
+//     background-color: transparent;
+//   }
 
-  .cdk-global-overlay-wrapper {
-    align-items: start !important;
-    position: static;
-  }
-}
+//   .cdk-global-overlay-wrapper {
+//     align-items: start !important;
+//     position: static;
+//   }
+// }

@@ -1,0 +1,36 @@
+.actions {
+  display: flex;
+  margin-bottom: 10px;
+
+  &-left,
+  &-center {
+    align-items: center;
+    display: flex;
+    flex: 1 1 0;
+  }
+
+  &-left {
+    justify-content: space-between;
+
+    &.container {
+      padding: 5px 0;
+    }
+
+    button {
+      width: 30%;
+    }
+  }
+
+  &-center {
+    text-align: center;
+    justify-content: space-around;
+
+    h1 {
+      margin: 0;
+    }
+  }
+}
+
+.container {
+  padding: 5px 15px;
+}

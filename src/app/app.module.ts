@@ -16,13 +16,26 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { HomeComponent } from './home/home.component';
 import { JournalComponent } from './home/journal/journal.component';
 import { SafePipe } from 'src/pipes/safe.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/moment';
+import * as moment from 'moment';
+import { CalendarComponent } from './components/calendar/calendar.component';
+
+export function momentAdapterFactory() {
+  return adapterFactory(moment);
+}
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, JournalComponent, SafePipe],
+  declarations: [AppComponent, CalendarComponent, HomeComponent, JournalComponent, SafePipe],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
@@ -32,6 +45,8 @@ import { SafePipe } from 'src/pipes/safe.pipe';
     MatMomentDateModule,
     MatTabsModule,
     MatToolbarModule,
+    ReactiveFormsModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory }),
   ],
   providers: [],
   bootstrap: [AppComponent],
