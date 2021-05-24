@@ -1,5 +1,11 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import {
+  CalendarEvent,
+  CalendarEventAction,
+  CalendarEventTimesChangedEvent,
+  CalendarMonthViewDay,
+  CalendarView,
+} from 'angular-calendar';
 import { Subject } from 'rxjs';
 import * as moment from 'moment';
 
@@ -24,31 +30,13 @@ const colors: any = {
   styleUrls: ['calendar.component.scss'],
 })
 export class CalendarComponent {
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-  CalendarView = CalendarView;
   events: CalendarEvent[] = [
     {
       start: moment().subtract(1, 'days').toDate(),
       end: moment().add(1, 'days').toDate(),
       title: 'A 3 day event',
       color: colors.red,
-      actions: this.actions,
+      // actions: this.actions,
       allDay: true,
       resizable: {
         beforeStart: true,
@@ -60,7 +48,7 @@ export class CalendarComponent {
       start: moment().toDate(),
       title: 'An event with no end date',
       color: colors.yellow,
-      actions: this.actions,
+      // actions: this.actions,
     },
     // {
     //   start: subDays(endOfMonth(new Date()), 3),
@@ -82,13 +70,13 @@ export class CalendarComponent {
     //   draggable: true,
     // },
   ];
-  isActiveDayOpen: boolean = true;
+  isTodayOpen: boolean = true;
   modalData!: {
     action: string;
     event: CalendarEvent;
   };
   view: CalendarView = CalendarView.Month;
-  viewDate: Date = new Date();
+  openedDate: Date = new Date();
   refresh: Subject<any> = new Subject();
 
   constructor() {}
@@ -110,17 +98,6 @@ export class CalendarComponent {
     // ];
   }
 
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    // if (isSameMonth(date, this.viewDate)) {
-    //   if ((isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) || events.length === 0) {
-    //     this.activeDayIsOpen = false;
-    //   } else {
-    //     this.activeDayIsOpen = true;
-    //   }
-    //   this.viewDate = date;
-    // }
-  }
-
   deleteEvent(eventToDelete: CalendarEvent) {
     this.events = this.events.filter((event) => event !== eventToDelete);
   }
@@ -136,19 +113,34 @@ export class CalendarComponent {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    // this.onEventClick('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
+  onDayClick(event: { day: CalendarMonthViewDay; sourceEvent: MouseEvent | any }): void {
+    this.setEventsAccordion(event.day);
+    this.openedDate = event.day.date;
+  }
+
+  onEventClick(event: { event: CalendarEvent; sourceEvent: MouseEvent | any }): void {
+    console.log('event clicked!', event);
   }
 
   onViewDateChange() {
-    this.isActiveDayOpen = false;
+    this.isTodayOpen = false;
   }
 
-  onViewButtonClick(view: CalendarView) {
-    this.view = view;
+  private setEventsAccordion(clickedDay: CalendarMonthViewDay) {
+    const clickedDate = clickedDay.date;
+    const clickedDateEvents = clickedDay.events;
+    const openedDate = moment(this.openedDate);
+    const isSameMonth = openedDate.isSame(clickedDate, 'month');
+    if (isSameMonth) {
+      const isSameDay = openedDate.isSame(clickedDate, 'day');
+      if ((isSameDay && this.isTodayOpen === true) || clickedDateEvents.length === 0) {
+        this.isTodayOpen = false;
+      } else {
+        this.isTodayOpen = true;
+      }
+    }
   }
 }
