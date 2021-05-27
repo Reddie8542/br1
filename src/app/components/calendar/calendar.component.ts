@@ -33,13 +33,14 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.events = this.entries.map((entry) => {
+      const date = typeof entry.date === 'string' ? new Date(entry.date) : entry.date;
       return {
         allDay: true,
         color: colors.green,
         draggable: false,
         meta: entry,
         resizable: { beforeStart: false, afterEnd: false },
-        start: entry.date,
+        start: date,
         title: entry.name,
       };
     });

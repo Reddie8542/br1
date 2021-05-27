@@ -1,6 +1,6 @@
 export interface JournalEntry {
-  id: string | number;
+  id?: string | number;
   name: string;
-  date: Date;
+  date: Date | string;
   url: string;
 }
