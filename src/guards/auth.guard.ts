@@ -13,7 +13,7 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (this.authService.authenticated) {
+    if (this.authService.authenticated$) {
       return true;
     } else {
       return this.router.createUrlTree(['/journal']);

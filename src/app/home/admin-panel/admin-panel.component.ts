@@ -10,7 +10,7 @@ const urlRegex = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
   templateUrl: 'admin-panel.component.html',
   styleUrls: ['admin-panel.component.scss'],
 })
-export class AdminPanel implements OnInit, OnDestroy {
+export class AdminPanelComponent implements OnInit, OnDestroy {
   entry: JournalEntry = {
     name: '',
     date: '',

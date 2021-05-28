@@ -1,0 +1,12 @@
+<form [formGroup]="form" (ngSubmit)="onSignIn()">
+  <h1>Sign In</h1>
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput formControlName="username" placeholder="Please type your username" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password" type="password" placeholder="Please type your password" />
+  </mat-form-field>
+  <button mat-flat-button type="submit" color="primary">Sign in</button>
+</form>

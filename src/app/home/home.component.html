@@ -2,7 +2,17 @@
   <mat-toolbar>
     <!-- <span>Br1</span> -->
     <span class="spacer"></span>
-    <button mat-button aria-label="Sign in">Sign In</button>
+    <button
+      *ngIf="!(authService.authenticated$ | async); else signOut"
+      mat-button
+      aria-label="Sign in"
+      (click)="onSignIn()"
+    >
+      Sign In
+    </button>
+    <ng-template #signOut>
+      <button mat-button aria-label="Sign Out" (click)="onSignOut()">Sign Out</button>
+    </ng-template>
   </mat-toolbar>
 </header>
 <main class="container">

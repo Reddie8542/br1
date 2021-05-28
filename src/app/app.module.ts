@@ -21,14 +21,23 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/moment';
 import * as moment from 'moment';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { AdminPanel } from './home/admin-panel/admin-panel.component';
+import { AdminPanelComponent } from './home/admin-panel/admin-panel.component';
+import { SignInDialogComponent } from './home/sign-in-dialog/sign-in-dialog.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
 }
 
 @NgModule({
-  declarations: [AdminPanel, AppComponent, CalendarComponent, HomeComponent, JournalComponent, SafePipe],
+  declarations: [
+    AdminPanelComponent,
+    AppComponent,
+    CalendarComponent,
+    HomeComponent,
+    JournalComponent,
+    SafePipe,
+    SignInDialogComponent,
+  ],
   imports: [
     AppRoutingModule,
     BrowserModule,
