@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Subscription } from 'rxjs';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal.service';
@@ -20,7 +21,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   entryForm!: FormGroup;
   sub: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder, private journal: JournalService) {}
+  constructor(private fb: FormBuilder, private journal: JournalService, private snackbar: MatSnackBar) {}
 
   ngOnInit() {
     this.entryForm = this.fb.group({
@@ -39,7 +40,10 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
     entry.date = entry.date.format();
     this.journal
       .createEntry(entry)
-      .then((docRef) => this.entryForm.reset())
+      .then((docRef) => {
+        this.entryForm.reset();
+        this.snackbar.open('Journal entry created successfully.', 'Dismiss', { duration: 5 * 1000 });
+      })
       .catch((error) => console.error(error));
   }
 

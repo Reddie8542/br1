@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HomeComponent } from './home/home.component';
@@ -53,6 +54,7 @@ export function momentAdapterFactory() {
     MatIconModule,
     MatInputModule,
     MatMomentDateModule,
+    MatSnackBarModule,
     MatTabsModule,
     MatToolbarModule,
     ReactiveFormsModule,
