@@ -12,7 +12,7 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'journal', component: JournalComponent },
-      { path: 'admin-panel', component: AdminPanelComponent },
+      { path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuard] },
     ],
   },
   { path: '*', redirectTo: 'journal' },

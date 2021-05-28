@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row entry-form">
-    <form [formGroup]="entryForm" (ngSubmit)="onCreate()">
+    <form [formGroup]="entryForm" (ngSubmit)="onCreate(entryForm.value)">
       <h1>Create a Journal Entry</h1>
       <mat-form-field>
         <mat-label>Entry's name</mat-label>
@@ -33,9 +33,9 @@
     <div class="container">
       <div class="row">
         <h1>Preview</h1>
-        <h2>{{ entry.name }}</h2>
-        <h3>{{ entry.date | date: "longDate" }}</h3>
-        <button mat-flat-button color="primary" (click)="onReadNow(entry.url)">
+        <h2>{{ previewEntry.name }}</h2>
+        <h3>{{ previewEntry.date | date: "longDate" }}</h3>
+        <button mat-flat-button color="primary" (click)="onReadNow(previewEntry.url)">
           Read now <mat-icon>launch</mat-icon>
         </button>
       </div>

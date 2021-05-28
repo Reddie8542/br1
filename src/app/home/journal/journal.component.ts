@@ -1,8 +1,4 @@
-import { OverlayOutsideClickDispatcher } from '@angular/cdk/overlay';
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatDatepicker } from '@angular/material/datepicker';
-import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-journal',

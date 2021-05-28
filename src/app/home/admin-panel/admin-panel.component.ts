@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { JournalEntry } from 'src/models/journal-entry.model';
+import { JournalService } from 'src/services/journal.service';
 
 const urlRegex = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 
@@ -11,7 +12,7 @@ const urlRegex = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
   styleUrls: ['admin-panel.component.scss'],
 })
 export class AdminPanelComponent implements OnInit, OnDestroy {
-  entry: JournalEntry = {
+  previewEntry: JournalEntry = {
     name: '',
     date: '',
     url: '',
@@ -19,7 +20,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   entryForm!: FormGroup;
   sub: Subscription = new Subscription();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private journal: JournalService) {}
 
   ngOnInit() {
     this.entryForm = this.fb.group({
@@ -27,16 +28,19 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
       url: this.fb.control(null, [Validators.required, Validators.pattern(urlRegex)]),
       date: this.fb.control(null, Validators.required),
     });
-    this.sub = this.entryForm.valueChanges.subscribe((entry: JournalEntry) => (this.entry = entry));
+    this.sub.add(this.entryForm.valueChanges.subscribe((entry: JournalEntry) => (this.previewEntry = entry)));
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
 
-  onCreate() {
-    const entry = this.entryForm.value as JournalEntry;
-    console.log(entry);
+  onCreate(entry: JournalEntry) {
+    entry.date = entry.date.format();
+    this.journal
+      .createEntry(entry)
+      .then((docRef) => this.entryForm.reset())
+      .catch((error) => console.error(error));
   }
 
   onReadNow(url: string) {
