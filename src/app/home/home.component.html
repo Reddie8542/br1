@@ -24,15 +24,11 @@
     <mat-hint>{{ profile.description }}</mat-hint>
   </div>
   <nav mat-tab-nav-bar mat-align-tabs="left">
-    <a
-      *ngFor="let tab of tabs"
-      mat-tab-link
-      [disabled]="tab.disabled"
-      [active]="tab.route === activeTab.route"
-      (click)="onTabClick(tab)"
-    >
-      {{ tab.label }}
-    </a>
+    <div *ngFor="let tab of tabs" [matTooltip]="getTabDisabledMessage(tab)" matTooltipPosition="above">
+      <a mat-tab-link [disabled]="tab.disabled" [active]="tab.route === activeTab.route" (click)="onTabClick(tab)">
+        {{ tab.label }}
+      </a>
+    </div>
   </nav>
   <router-outlet></router-outlet>
 </main>

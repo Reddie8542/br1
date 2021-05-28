@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs';
 
@@ -7,6 +8,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
   authenticated$ = new BehaviorSubject<boolean>(firebase.auth().currentUser != null);
+
+  constructor(private router: Router) {}
 
   signIn(username: string, password: string) {
     return firebase
@@ -19,6 +22,9 @@ export class AuthService {
     return firebase
       .auth()
       .signOut()
-      .then(() => this.authenticated$.next(false));
+      .then(() => {
+        this.authenticated$.next(false);
+        this.router.navigate(['/journal']);
+      });
   }
 }

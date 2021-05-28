@@ -9,11 +9,13 @@ import { SignInDialogComponent } from './sign-in-dialog/sign-in-dialog.component
 interface Tab {
   label: string;
   route: string;
-  disabled: boolean;
+  disabled?: boolean;
+  disabledMessage?: string;
 }
 
-const journalTab: Tab = { label: 'Journal', route: '/journal', disabled: false };
-const adminTab: Tab = { label: 'Admin Panel', route: '/admin-panel', disabled: false };
+const journalTab: Tab = { label: 'Journal', route: '/journal' };
+const socialTab: Tab = { label: 'Social', route: '/social', disabled: true, disabledMessage: 'In progress...' };
+const adminTab: Tab = { label: 'Admin Panel', route: '/admin-panel' };
 
 @Component({
   selector: 'app-home',
@@ -36,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.sub = this.authService.authenticated$.subscribe(this.onAuthStateChanges.bind(this));
     this.onAuthStateChanges(this.authService.authenticated$.value);
-    this.tabs = [journalTab];
+    this.tabs = [journalTab, socialTab];
     this.navigate(this.tabs[0]);
   }
 
@@ -47,6 +49,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   private navigate(tab: Tab) {
     this.activeTab = tab;
     this.router.navigateByUrl(tab.route);
+  }
+
+  getTabDisabledMessage(tab: Tab): string {
+    return tab.disabledMessage != null ? tab.disabledMessage : '';
   }
 
   onAuthStateChanges(authenticated: boolean) {
