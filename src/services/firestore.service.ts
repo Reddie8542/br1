@@ -12,7 +12,6 @@ export class FirestoreService {
   }
 
   addDocument<T>(collectionId: string, document: T) {
-    console.log(`Adding document to collecton ${collectionId}`, document);
     return this.getCollection(collectionId).add(document);
   }
 
