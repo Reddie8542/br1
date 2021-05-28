@@ -19,8 +19,8 @@ export class SignInDialogComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      username: this.fb.control('bruno.hiram@gmail.com', Validators.required),
-      password: this.fb.control('test12', Validators.required),
+      username: this.fb.control(null, Validators.required),
+      password: this.fb.control(null, Validators.required),
     });
   }
 
