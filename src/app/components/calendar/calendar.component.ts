@@ -3,6 +3,8 @@ import { CalendarEvent, CalendarMonthViewDay, CalendarView } from 'angular-calen
 import * as moment from 'moment';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal.service';
+import firebase from 'firebase';
+import { Subject } from 'rxjs';
 
 const colors: { [name: string]: { primary: string; secondary: string } } = {
   green: {
@@ -21,6 +23,7 @@ export class CalendarComponent implements OnInit {
   isTodayOpen: boolean = false;
   openedDate: Date = new Date();
   view: CalendarView = CalendarView.Month;
+  refreshCalendar = new Subject();
 
   constructor(private journal: JournalService) {}
 
@@ -30,29 +33,11 @@ export class CalendarComponent implements OnInit {
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
-          const entry = doc.data() as JournalEntry;
-          const event: CalendarEvent<JournalEntry> = {
-            allDay: true,
-            color: colors.green,
-            draggable: false,
-            meta: entry,
-            resizable: { beforeStart: false, afterEnd: false },
-            start: new Date(entry.date),
-            title: entry.name,
-          };
+          const event = this.transformDocumentDataToCalendarEvent(doc);
           this.events.push(event);
         });
+        this.refreshCalendar.next();
       });
-  }
-
-  onDayClick(e: { day: CalendarMonthViewDay<JournalEntry>; sourceEvent: MouseEvent | any }): void {
-    this.setEventsAccordion(e.day);
-    this.openedDate = e.day.date;
-  }
-
-  onEventClick(e: { event: CalendarEvent<JournalEntry>; sourceEvent: MouseEvent | any }): void {
-    const entryUrl = e.event.meta?.url;
-    window.open(entryUrl, '_blank');
   }
 
   private setEventsAccordion(clickedDay: CalendarMonthViewDay) {
@@ -68,5 +53,28 @@ export class CalendarComponent implements OnInit {
         this.isTodayOpen = true;
       }
     }
+  }
+
+  private transformDocumentDataToCalendarEvent(doc: firebase.firestore.DocumentData): CalendarEvent<JournalEntry> {
+    const entry = doc.data() as JournalEntry;
+    return {
+      allDay: true,
+      color: colors.green,
+      draggable: false,
+      meta: entry,
+      resizable: { beforeStart: false, afterEnd: false },
+      start: new Date(entry.date),
+      title: entry.name,
+    } as CalendarEvent<JournalEntry>;
+  }
+
+  onDayClick(e: { day: CalendarMonthViewDay<JournalEntry>; sourceEvent: MouseEvent | any }): void {
+    this.setEventsAccordion(e.day);
+    this.openedDate = e.day.date;
+  }
+
+  onEventClick(e: { event: CalendarEvent<JournalEntry>; sourceEvent: MouseEvent | any }): void {
+    const entryUrl = e.event.meta?.url;
+    window.open(entryUrl, '_blank');
   }
 }
