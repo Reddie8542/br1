@@ -6,32 +6,32 @@
         color="primary"
         mwlCalendarPreviousView
         [view]="view"
-        [(viewDate)]="openedDate"
+        [(viewDate)]="calendarDate"
         (viewDateChange)="isTodayOpen = false"
       >
         Previous
       </button>
-      <button mat-stroked-button color="primary" mwlCalendarToday [(viewDate)]="openedDate">Today</button>
+      <button mat-stroked-button color="primary" mwlCalendarToday [(viewDate)]="calendarDate">Today</button>
       <button
         mat-stroked-button
         color="primary"
         mwlCalendarNextView
         [view]="view"
-        [(viewDate)]="openedDate"
+        [(viewDate)]="calendarDate"
         (viewDateChange)="isTodayOpen = false"
       >
         Next
       </button>
     </div>
     <div class="container actions-center">
-      <h1>{{ openedDate | calendarDate: view + "ViewTitle":"en" }}</h1>
+      <h1>{{ calendarDate | calendarDate: view + "ViewTitle":"en" }}</h1>
     </div>
   </div>
   <div>
     <mwl-calendar-month-view
       [activeDayIsOpen]="isTodayOpen"
       [events]="events"
-      [viewDate]="openedDate"
+      [viewDate]="calendarDate"
       [refresh]="refreshCalendar"
       (dayClicked)="onDayClick($event)"
       (eventClicked)="onEventClick($event)"
