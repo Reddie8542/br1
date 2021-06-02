@@ -37,14 +37,17 @@ describe('CalendarComponent', () => {
   });
 
   it('should start "watching" today', () => {
-    expect(component.calendarDate).toEqual(today.toDate());
+    expect(component.selectedDate).not.toBeNull();
+    const isSameMonth = today.isSame(component.selectedDate, 'month');
+    const isSameDay = today.isSame(component.selectedDate, 'day');
+    const isToday = isSameMonth && isSameDay;
+    expect(isToday).toBeTrue();
   });
 
   it('should transform a fetched journal entry to a calendar event', () => {
     const event = component.toCalendarEvent(mockEntry);
     expect(event).not.toBeNull();
     expect(event.meta).not.toBeNull();
-    expect(typeof event.meta).toBe('JournalEntry');
     const meta = event.meta as any;
     for (const key of Object.keys(meta)) {
       if (meta != null) {
@@ -77,16 +80,20 @@ describe('CalendarComponent', () => {
     };
     component.onDayClick(e);
     expect(component.showEventsAccordion).toBeTrue();
-    expect(component.calendarDate).toEqual(e.day.date);
+    expect(component.selectedDate).toEqual(e.day.date);
   });
 
   it('should NOT expand events accordion if clicked day has no events are available', () => {
+    const yesterday = today.subtract(1, 'day');
     const mockClickedDay: CalendarMonthViewDay<JournalEntry> = {
       ...defaultMockClickedDay,
       events: [],
-      date: today.toDate(),
-      day: today.day(),
-      isWeekend: isWeekend(today),
+      date: yesterday.toDate(),
+      day: yesterday.day(),
+      isWeekend: isWeekend(yesterday),
+      isFuture: false,
+      isToday: false,
+      isPast: true,
     };
     const hasEvents = mockClickedDay.events.length > 0;
     expect(hasEvents).toBeFalse();
@@ -97,7 +104,7 @@ describe('CalendarComponent', () => {
     };
     component.onDayClick(e);
     expect(component.showEventsAccordion).toBeFalse();
-    expect(component.calendarDate).toEqual(e.day.date);
+    expect(component.selectedDate).toEqual(e.day.date);
   });
 
   it('should expand events accordion if clicked day has events', () => {
@@ -121,6 +128,6 @@ describe('CalendarComponent', () => {
     };
     component.onDayClick(e);
     expect(component.showEventsAccordion).toBeTrue();
-    expect(component.calendarDate).toEqual(e.day.date);
+    expect(component.selectedDate).toEqual(e.day.date);
   });
 });

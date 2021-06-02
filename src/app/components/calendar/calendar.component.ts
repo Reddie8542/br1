@@ -21,7 +21,7 @@ const colors: { [name: string]: { primary: string; secondary: string } } = {
 export class CalendarComponent implements OnInit {
   events: CalendarEvent<JournalEntry>[] = [];
   showEventsAccordion: boolean = false;
-  calendarDate: Date = new Date();
+  selectedDate: Date = new Date();
   calendarView: CalendarView = CalendarView.Month;
   refreshCalendar = new Subject();
 
@@ -37,23 +37,28 @@ export class CalendarComponent implements OnInit {
       });
   }
 
-  private setEventsAccordion(clickedDay: CalendarMonthViewDay<JournalEntry>, calendarDate: moment.Moment): void {
+  private setEventsAccordion(
+    clickedDay: CalendarMonthViewDay<JournalEntry>,
+    selectedCalendarDate: moment.Moment
+  ): void {
     const clickedDate = clickedDay.date;
-    const clickedDateHasEvents = clickedDay.events.length === 0;
-    const isSameMonth = calendarDate.isSame(clickedDate, 'month');
-    if (isSameMonth) {
-      const isSameDay = calendarDate.isSame(clickedDate, 'day');
-      if (!clickedDateHasEvents || (isSameDay && this.showEventsAccordion)) {
-        this.showEventsAccordion = false;
+    const clickedDateHasEvents = clickedDay.events.length > 0;
+    const isSameMonth = selectedCalendarDate.isSame(clickedDate, 'month');
+    const isSameAsSelectedDate = selectedCalendarDate.isSame(clickedDate, 'day') && isSameMonth;
+    if (clickedDateHasEvents) {
+      if (isSameAsSelectedDate) {
+        this.showEventsAccordion = !this.showEventsAccordion;
       } else {
         this.showEventsAccordion = true;
       }
+    } else {
+      this.showEventsAccordion = false;
     }
   }
 
   onDayClick(e: { day: CalendarMonthViewDay<JournalEntry>; sourceEvent: MouseEvent | any }): void {
-    this.setEventsAccordion(e.day, moment(this.calendarDate));
-    this.calendarDate = e.day.date;
+    this.setEventsAccordion(e.day, moment(this.selectedDate));
+    this.selectedDate = e.day.date;
   }
 
   onEventClick(e: { event: CalendarEvent<JournalEntry>; sourceEvent: MouseEvent | any }): void {
