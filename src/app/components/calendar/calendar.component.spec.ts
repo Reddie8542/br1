@@ -40,7 +40,8 @@ describe('CalendarComponent', () => {
     expect(component.selectedDate).not.toBeNull();
     const isSameMonth = today.isSame(component.selectedDate, 'month');
     const isSameDay = today.isSame(component.selectedDate, 'day');
-    const isToday = isSameMonth && isSameDay;
+    const isSameYear = today.isSame(component.selectedDate, 'year');
+    const isToday = isSameMonth && isSameDay && isSameYear;
     expect(isToday).toBeTrue();
   });
 
