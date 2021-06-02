@@ -37,17 +37,7 @@ export class CalendarComponent implements OnInit {
       });
   }
 
-  onDayClick(e: { day: CalendarMonthViewDay<JournalEntry>; sourceEvent: MouseEvent | any }): void {
-    this.setEventsAccordion(e.day, moment(this.calendarDate));
-    this.calendarDate = e.day.date;
-  }
-
-  onEventClick(e: { event: CalendarEvent<JournalEntry>; sourceEvent: MouseEvent | any }): void {
-    const entryUrl = e.event.meta?.url;
-    window.open(entryUrl, '_blank');
-  }
-
-  setEventsAccordion(clickedDay: CalendarMonthViewDay, calendarDate: moment.Moment): void {
+  private setEventsAccordion(clickedDay: CalendarMonthViewDay<JournalEntry>, calendarDate: moment.Moment): void {
     const clickedDate = clickedDay.date;
     const clickedDateHasEvents = clickedDay.events.length === 0;
     const isSameMonth = calendarDate.isSame(clickedDate, 'month');
@@ -59,6 +49,16 @@ export class CalendarComponent implements OnInit {
         this.showEventsAccordion = true;
       }
     }
+  }
+
+  onDayClick(e: { day: CalendarMonthViewDay<JournalEntry>; sourceEvent: MouseEvent | any }): void {
+    this.setEventsAccordion(e.day, moment(this.calendarDate));
+    this.calendarDate = e.day.date;
+  }
+
+  onEventClick(e: { event: CalendarEvent<JournalEntry>; sourceEvent: MouseEvent | any }): void {
+    const entryUrl = e.event.meta?.url;
+    window.open(entryUrl, '_blank');
   }
 
   toCalendarEvent(entry: JournalEntry): CalendarEvent<JournalEntry> {
