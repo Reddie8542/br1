@@ -20,9 +20,9 @@ const colors: { [name: string]: { primary: string; secondary: string } } = {
 })
 export class CalendarComponent implements OnInit {
   events: CalendarEvent<JournalEntry>[] = [];
-  isTodayOpen: boolean = false;
+  showEventsAccordion: boolean = false;
   calendarDate: Date = new Date();
-  view: CalendarView = CalendarView.Month;
+  calendarView: CalendarView = CalendarView.Month;
   refreshCalendar = new Subject();
 
   constructor(private journal: JournalService) {}
@@ -32,39 +32,9 @@ export class CalendarComponent implements OnInit {
       .getAllEntries()
       .get()
       .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          const event = this.transformDocumentDataToCalendarEvent(doc);
-          this.events.push(event);
-        });
+        snapshot.forEach((doc) => this.events.push(this.toCalendarEvent(doc.data() as JournalEntry)));
         this.refreshCalendar.next();
       });
-  }
-
-  private setEventsAccordion(clickedDay: CalendarMonthViewDay, calendarDate: moment.Moment) {
-    const clickedDate = clickedDay.date;
-    const clickedDateHasEvents = clickedDay.events.length === 0;
-    const isSameMonth = calendarDate.isSame(clickedDate, 'month');
-    if (isSameMonth) {
-      const isSameDay = calendarDate.isSame(clickedDate, 'day');
-      if (!clickedDateHasEvents || (isSameDay && this.isTodayOpen)) {
-        this.isTodayOpen = false;
-      } else {
-        this.isTodayOpen = true;
-      }
-    }
-  }
-
-  private transformDocumentDataToCalendarEvent(doc: firebase.firestore.DocumentData): CalendarEvent<JournalEntry> {
-    const entry = doc.data() as JournalEntry;
-    return {
-      allDay: true,
-      color: colors.green,
-      draggable: false,
-      meta: entry,
-      resizable: { beforeStart: false, afterEnd: false },
-      start: new Date(entry.date),
-      title: entry.name,
-    } as CalendarEvent<JournalEntry>;
   }
 
   onDayClick(e: { day: CalendarMonthViewDay<JournalEntry>; sourceEvent: MouseEvent | any }): void {
@@ -75,5 +45,31 @@ export class CalendarComponent implements OnInit {
   onEventClick(e: { event: CalendarEvent<JournalEntry>; sourceEvent: MouseEvent | any }): void {
     const entryUrl = e.event.meta?.url;
     window.open(entryUrl, '_blank');
+  }
+
+  setEventsAccordion(clickedDay: CalendarMonthViewDay, calendarDate: moment.Moment): void {
+    const clickedDate = clickedDay.date;
+    const clickedDateHasEvents = clickedDay.events.length === 0;
+    const isSameMonth = calendarDate.isSame(clickedDate, 'month');
+    if (isSameMonth) {
+      const isSameDay = calendarDate.isSame(clickedDate, 'day');
+      if (!clickedDateHasEvents || (isSameDay && this.showEventsAccordion)) {
+        this.showEventsAccordion = false;
+      } else {
+        this.showEventsAccordion = true;
+      }
+    }
+  }
+
+  toCalendarEvent(entry: JournalEntry): CalendarEvent<JournalEntry> {
+    return {
+      allDay: true,
+      color: colors.green,
+      draggable: false,
+      meta: entry,
+      resizable: { beforeStart: false, afterEnd: false },
+      start: moment(entry.date).toDate(),
+      title: entry.name,
+    } as CalendarEvent<JournalEntry>;
   }
 }

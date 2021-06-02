@@ -1,6 +1,6 @@
 export interface JournalEntry {
-  id?: string | number;
+  [index: string]: string;
   name: string;
-  date: any;
+  date: string;
   url: string;
 }

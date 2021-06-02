@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal.service';
@@ -29,7 +30,7 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
       url: this.fb.control(null, [Validators.required, Validators.pattern(urlRegex)]),
       date: this.fb.control(null, Validators.required),
     });
-    this.sub.add(this.entryForm.valueChanges.subscribe((entry: JournalEntry) => (this.previewEntry = entry)));
+    this.sub.add(this.entryForm.valueChanges.subscribe(this.onFormChanges.bind(this)));
   }
 
   ngOnDestroy() {
@@ -37,7 +38,6 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
   }
 
   onCreate(entry: JournalEntry) {
-    entry.date = entry.date.format();
     this.journal
       .createEntry(entry)
       .then((docRef) => {
@@ -45,6 +45,11 @@ export class AdminPanelComponent implements OnInit, OnDestroy {
         this.snackbar.open('Journal entry created successfully.', 'Dismiss', { duration: 5 * 1000 });
       })
       .catch((error) => console.error(error));
+  }
+
+  onFormChanges(value: any) {
+    const date = (value.date as moment.Moment).format();
+    this.previewEntry = { ...value, date };
   }
 
   onReadNow(url: string) {

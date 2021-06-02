@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row entry-form">
-    <form [formGroup]="entryForm" (ngSubmit)="onCreate(entryForm.value)">
+    <form [formGroup]="entryForm" (ngSubmit)="onCreate(previewEntry)">
       <h1>Create a Journal Entry</h1>
       <mat-form-field>
         <mat-label>Entry's name</mat-label>
