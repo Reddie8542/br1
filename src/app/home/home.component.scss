@@ -1,4 +1,6 @@
-$profile-pic-size: 8vw;
+$profile-pic-sm-size: 20vw;
+$profile-pic-md-size: 15vw;
+$profile-pic-lg-size: 8vw;
 
 .center {
   display: flex;
@@ -11,8 +13,6 @@ $profile-pic-size: 8vw;
     border-radius: 50%;
     position: relative;
     margin-bottom: 10px;
-    width: $profile-pic-size;
-    height: $profile-pic-size;
     overflow: hidden;
 
     img {
@@ -34,4 +34,44 @@ $profile-pic-size: 8vw;
 
 .spacer {
   flex: 1 1 auto;
+}
+
+/* Mobile */
+@media only screen and (max-width: 600px) {
+  .profile {
+    &-picture {
+      width: $profile-pic-sm-size;
+      height: $profile-pic-sm-size;
+    }
+  }
+}
+
+/* Tablet */
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+  .profile {
+    &-picture {
+      width: $profile-pic-md-size;
+      height: $profile-pic-md-size;
+    }
+  }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1201px) and (max-width: 1400px) {
+  .profile {
+    &-picture {
+      width: $profile-pic-lg-size;
+      height: $profile-pic-lg-size;
+    }
+  }
+}
+
+/* Large Desktop */
+@media only screen and (min-width: 1401px) {
+  .profile {
+    &-picture {
+      width: $profile-pic-lg-size;
+      height: $profile-pic-lg-size;
+    }
+  }
 }
