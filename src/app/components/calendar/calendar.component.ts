@@ -3,7 +3,6 @@ import { CalendarEvent, CalendarMonthViewDay, CalendarView } from 'angular-calen
 import * as moment from 'moment';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal.service';
-import firebase from 'firebase';
 import { Subject } from 'rxjs';
 
 const colors: { [name: string]: { primary: string; secondary: string } } = {

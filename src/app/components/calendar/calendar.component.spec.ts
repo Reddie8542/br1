@@ -1,7 +1,4 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { CalendarMonthViewDay } from 'angular-calendar';
-import { CalendarEvent } from 'calendar-utils';
 import * as moment from 'moment';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { FirestoreService } from 'src/services/firestore.service';
