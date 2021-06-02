@@ -2,26 +2,14 @@
   display: flex;
   margin-bottom: 10px;
 
-  &-left,
-  &-center {
+  .calendar-view-btns,
+  .calendar-month {
     align-items: center;
     display: flex;
     flex: 1 1 0;
   }
 
-  &-left {
-    justify-content: space-between;
-
-    &.container {
-      padding: 5px 0;
-    }
-
-    button {
-      width: 25%;
-    }
-  }
-
-  &-center {
+  .calendar-month {
     text-align: center;
     justify-content: space-around;
 
@@ -29,8 +17,74 @@
       margin: 0;
     }
   }
+
+  .calendar-view-btns {
+    justify-content: center;
+
+    &.container {
+      padding: 5px 0;
+    }
+  }
 }
 
 .container {
   padding: 5px 15px;
+}
+
+/* Mobile */
+@media only screen and (max-width: 600px) {
+  .actions {
+    flex-wrap: wrap;
+
+    .calendar-view-btns,
+    .calendar-month {
+      display: flex;
+      flex: auto;
+      width: 100%;
+    }
+
+    .calendar-view-btns {
+      justify-content: space-around;
+    }
+  }
+}
+
+/* Tablet */
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+  .actions {
+    flex-wrap: wrap;
+
+    .calendar-view-btns,
+    .calendar-month {
+      display: flex;
+      flex: auto;
+      width: 100%;
+    }
+
+    .calendar-view-btns {
+      justify-content: space-around;
+    }
+  }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1201px) and (max-width: 1400px) {
+  .actions {
+    .calendar-view-btns {
+      button {
+        margin: 0 15px;
+      }
+    }
+  }
+}
+
+/* Large Desktop */
+@media only screen and (min-width: 1401px) {
+  .actions {
+    .calendar-view-btns {
+      button {
+        margin: 0 15px;
+      }
+    }
+  }
 }
