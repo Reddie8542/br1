@@ -1,6 +1,7 @@
+import firebase from 'firebase/app';
+import 'firebase/auth';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import firebase from 'firebase';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
