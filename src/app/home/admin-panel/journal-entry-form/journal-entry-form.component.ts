@@ -49,7 +49,10 @@ export class JournalEntryFormComponent implements OnInit, OnDestroy {
   }
 
   onFormChanges(value: any) {
-    const date = (value.date as moment.Moment).format();
+    let date: string = '';
+    if (value.date != null) {
+      date = (value.date as moment.Moment).format();
+    }
     this.previewEntry = { ...value, date };
   }
 
