@@ -34,10 +34,11 @@ describe('CalendarComponent', () => {
   });
 
   it('should start "watching" today', () => {
-    expect(component.selectedDate).not.toBeNull();
-    const isSameMonth = today.isSame(component.selectedDate, 'month');
-    const isSameDay = today.isSame(component.selectedDate, 'day');
-    const isSameYear = today.isSame(component.selectedDate, 'year');
+    const initializationDate = component.selectedDate;
+    expect(initializationDate).not.toBeNull();
+    const isSameMonth = today.isSame(initializationDate, 'month');
+    const isSameDay = today.isSame(initializationDate, 'day');
+    const isSameYear = today.isSame(initializationDate, 'year');
     const isToday = isSameMonth && isSameDay && isSameYear;
     expect(isToday).toBeTrue();
   });
