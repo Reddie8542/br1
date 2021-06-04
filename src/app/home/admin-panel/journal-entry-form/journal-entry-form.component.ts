@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal.service';
@@ -48,10 +49,10 @@ export class JournalEntryFormComponent implements OnInit, OnDestroy {
       .catch((error) => console.error(error));
   }
 
-  onFormChanges(value: any) {
+  onFormChanges(value: { name: string; url: string; date: moment.Moment }) {
     let date: string = '';
     if (value.date != null) {
-      date = (value.date as moment.Moment).format();
+      date = value.date.format();
     }
     this.previewEntry = { ...value, date };
   }
