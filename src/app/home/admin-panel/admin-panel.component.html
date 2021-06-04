@@ -1,44 +1,5 @@
 <div class="container">
   <div class="row entry-form">
-    <form [formGroup]="entryForm" (ngSubmit)="onCreate(previewEntry)">
-      <h1>Create a Journal Entry</h1>
-      <mat-form-field>
-        <mat-label>Entry's name</mat-label>
-        <input matInput formControlName="name" placeholder="Please type entry's name" />
-        <mat-hint *ngIf="entryForm.get('name')?.touched && entryForm.get('name')?.errors?.required"
-          >Entry name is required</mat-hint
-        >
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Entry's URL</mat-label>
-        <input matInput formControlName="url" placeholder="Please type entry's URL" />
-        <mat-hint *ngIf="entryForm.get('url')?.touched && entryForm.get('url')?.errors?.required"
-          >Entry URL is required</mat-hint
-        >
-        <mat-hint *ngIf="entryForm.get('url')?.touched && entryForm.get('url')?.errors?.pattern"
-          >Please enter a valid URL</mat-hint
-        >
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Choose entry's date</mat-label>
-        <input matInput formControlName="date" [matDatepicker]="picker" />
-        <mat-hint *ngIf="entryForm.get('date')?.touched && entryForm.get('date')?.errors?.required"
-          >Entry date is required</mat-hint
-        >
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <button mat-flat-button color="primary" type="submit" [disabled]="!entryForm.valid">Create</button>
-    </form>
-    <div class="container">
-      <div class="row">
-        <h1>Preview</h1>
-        <h2>{{ previewEntry.name }}</h2>
-        <h3>{{ previewEntry.date | date: "longDate" }}</h3>
-        <button mat-flat-button color="primary" (click)="onReadNow(previewEntry.url)">
-          Read now <mat-icon>launch</mat-icon>
-        </button>
-      </div>
-    </div>
+    <app-journal-entry-form [showPreview]="true"></app-journal-entry-form>
   </div>
 </div>

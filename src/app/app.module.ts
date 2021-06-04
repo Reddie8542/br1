@@ -25,6 +25,7 @@ import * as moment from 'moment';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { AdminPanelComponent } from './home/admin-panel/admin-panel.component';
 import { SignInDialogComponent } from './home/sign-in-dialog/sign-in-dialog.component';
+import { JournalEntryFormComponent } from './home/admin-panel/journal-entry-form/journal-entry-form.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -37,6 +38,7 @@ export function momentAdapterFactory() {
     CalendarComponent,
     HomeComponent,
     JournalComponent,
+    JournalEntryFormComponent,
     SafePipe,
     SignInDialogComponent,
   ],
