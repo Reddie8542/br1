@@ -25,7 +25,14 @@
   </div>
   <nav mat-tab-nav-bar mat-align-tabs="left">
     <div *ngFor="let tab of tabs" [matTooltip]="getTabDisabledMessage(tab)" matTooltipPosition="above">
-      <a mat-tab-link [disabled]="tab.disabled" [active]="tab.route === activeTab.route" (click)="onTabClick(tab)">
+      <a
+        #rla="routerLinkActive"
+        mat-tab-link
+        routerLinkActive
+        [routerLink]="[tab.route]"
+        [disabled]="tab.disabled"
+        [active]="rla.isActive"
+      >
         {{ tab.label }}
       </a>
     </div>

@@ -11,11 +11,12 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
+      { path: '', redirectTo: 'journal', pathMatch: 'full' },
       { path: 'journal', component: JournalComponent },
       { path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuard] },
     ],
   },
-  { path: '*', redirectTo: 'journal' },
+  { path: '*', redirectTo: '' },
 ];
 
 @NgModule({

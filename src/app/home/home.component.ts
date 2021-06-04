@@ -13,9 +13,10 @@ interface Tab {
   disabledMessage?: string;
 }
 
-const journalTab: Tab = { label: 'Journal', route: '/journal' };
-const socialTab: Tab = { label: 'Social', route: '/social', disabled: true, disabledMessage: 'In progress...' };
-const adminTab: Tab = { label: 'Admin Panel', route: '/admin-panel' };
+const journalTab: Tab = { label: 'Journal', route: 'journal' };
+const socialTab: Tab = { label: 'Social', route: 'social', disabled: true, disabledMessage: 'In progress...' };
+const adminTab: Tab = { label: 'Admin Panel', route: 'admin-panel' };
+const defaultTabs: Tab[] = [journalTab, socialTab];
 
 @Component({
   selector: 'app-home',
@@ -23,32 +24,23 @@ const adminTab: Tab = { label: 'Admin Panel', route: '/admin-panel' };
   styleUrls: ['home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  activeTab!: Tab;
   profile: Profile = {
     firstname: 'Bruno',
     lastname: 'Alva',
     description:
       'Me gustaría no dejarte vacía - pequeña amiga "descripción" - pero al mismo tiempo no se me ocurre qué escribir...',
   };
-  tabs: Tab[] = [];
+  tabs: Tab[] = [...defaultTabs];
   sub = new Subscription();
 
   constructor(public authService: AuthService, private dialog: MatDialog, private router: Router) {}
 
   ngOnInit() {
     this.sub = this.authService.authenticated$.subscribe(this.onAuthStateChanges.bind(this));
-    this.onAuthStateChanges(this.authService.authenticated$.value);
-    this.tabs = [journalTab, socialTab];
-    this.navigate(this.tabs[0]);
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
-  }
-
-  private navigate(tab: Tab) {
-    this.activeTab = tab;
-    this.router.navigateByUrl(tab.route);
   }
 
   getTabDisabledMessage(tab: Tab): string {
@@ -56,11 +48,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onAuthStateChanges(authenticated: boolean) {
+    this.tabs = [...defaultTabs];
     if (authenticated) {
       this.tabs.push(adminTab);
-    } else {
-      const index = this.tabs.findIndex((tab) => tab.route === adminTab.route);
-      this.tabs.splice(index, 1);
     }
   }
 
@@ -71,9 +61,5 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onSignOut() {
     this.authService.signOut();
-  }
-
-  onTabClick(tab: Tab) {
-    this.navigate(tab);
   }
 }
