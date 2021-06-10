@@ -1,5 +1,6 @@
 export interface JournalEntry {
-  [index: string]: string;
+  [key: string]: string | undefined;
+  id?: string;
   name: string;
   date: string;
   url: string;
