@@ -33,16 +33,6 @@ describe('CalendarComponent', () => {
     component = new CalendarComponent(journal);
   });
 
-  it('should start "watching" today', () => {
-    const initializationDate = component.selectedDate;
-    expect(initializationDate).not.toBeNull();
-    const isSameMonth = today.isSame(initializationDate, 'month');
-    const isSameDay = today.isSame(initializationDate, 'day');
-    const isSameYear = today.isSame(initializationDate, 'year');
-    const isToday = isSameMonth && isSameDay && isSameYear;
-    expect(isToday).toBeTrue();
-  });
-
   it('should transform a fetched journal entry to a calendar event', () => {
     const event = component.toCalendarEvent(mockEntry);
     expect(event).not.toBeNull();
