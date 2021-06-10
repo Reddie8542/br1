@@ -33,6 +33,7 @@ describe('JournalEntryFormComponent', () => {
   it('should keep the preview updated with each change in the form', () => {
     const empty = { name: '', url: '', date: '' };
     const mockValue = {
+      id: '',
       name: 'test',
       url: 'test',
       date: moment(new Date()),
