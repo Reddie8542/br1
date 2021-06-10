@@ -16,6 +16,10 @@ export class FirestoreService {
     return this.getCollection(collectionId).add(document);
   }
 
+  deleteDocument(collectionId: string, docId: string) {
+    return this.getCollection(collectionId).doc(docId).delete();
+  }
+
   getCollection(id: string) {
     return this.db.collection(id);
   }
@@ -26,5 +30,9 @@ export class FirestoreService {
 
   getDocumentByPath(path: string) {
     return this.db.doc(path);
+  }
+
+  updateDocument<T>(collectionId: string, docId: string | undefined, document: T) {
+    return this.getCollection(collectionId).doc(docId).update(document);
   }
 }

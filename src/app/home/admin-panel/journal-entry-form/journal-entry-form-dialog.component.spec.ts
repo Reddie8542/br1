@@ -1,23 +1,27 @@
 import { TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import * as moment from 'moment';
-import { JournalEntry } from 'src/models/journal-entry.model';
-import { JournalEntryFormComponent } from './journal-entry-form.component';
+import { JournalEntryFormDialogComponent } from './journal-entry-form-dialog.component';
 
 describe('JournalEntryFormComponent', () => {
-  let component: JournalEntryFormComponent;
+  let component: JournalEntryFormDialogComponent;
 
   beforeEach(async () => {
     return TestBed.configureTestingModule({
-      imports: [RouterTestingModule, ReactiveFormsModule, MatSnackBarModule],
-      declarations: [JournalEntryFormComponent],
+      imports: [RouterTestingModule, ReactiveFormsModule, MatDialogModule, MatSnackBarModule],
+      declarations: [JournalEntryFormDialogComponent],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} },
+      ],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    const fixture = TestBed.createComponent(JournalEntryFormComponent);
+    const fixture = TestBed.createComponent(JournalEntryFormDialogComponent);
     component = fixture.componentInstance;
     component.ngOnInit();
   });

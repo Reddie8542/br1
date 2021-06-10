@@ -27,8 +27,10 @@ import * as moment from 'moment';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { AdminPanelComponent } from './home/admin-panel/admin-panel.component';
 import { SignInDialogComponent } from './home/sign-in-dialog/sign-in-dialog.component';
-import { JournalEntryFormComponent } from './home/admin-panel/journal-entry-form/journal-entry-form.component';
+import { JournalEntryFormDialogComponent } from './home/admin-panel/journal-entry-form/journal-entry-form-dialog.component';
 import { JournalEntryTableComponent } from './home/admin-panel/journal-entry-table/journal-entry-table.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -39,9 +41,10 @@ export function momentAdapterFactory() {
     AdminPanelComponent,
     AppComponent,
     CalendarComponent,
+    ConfirmDialogComponent,
     HomeComponent,
     JournalComponent,
-    JournalEntryFormComponent,
+    JournalEntryFormDialogComponent,
     JournalEntryTableComponent,
     SafePipe,
     SignInDialogComponent,
@@ -57,6 +60,7 @@ export function momentAdapterFactory() {
     MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
+    MatDialogModule,
     MatDividerModule,
     MatFormFieldModule,
     MatIconModule,

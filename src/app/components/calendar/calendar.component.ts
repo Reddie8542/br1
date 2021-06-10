@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay, CalendarView } from 'angular-calendar';
 import * as moment from 'moment';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal.service';
-import { Subject } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const colors: { [name: string]: { primary: string; secondary: string } } = {
   green: {
@@ -17,23 +18,26 @@ const colors: { [name: string]: { primary: string; secondary: string } } = {
   templateUrl: 'calendar.component.html',
   styleUrls: ['calendar.component.scss'],
 })
-export class CalendarComponent implements OnInit {
-  events: CalendarEvent<JournalEntry>[] = [];
-  showEventsAccordion: boolean = false;
-  selectedDate: Date = new Date();
+export class CalendarComponent implements OnInit, OnDestroy {
   calendarView: CalendarView = CalendarView.Month;
+  events!: CalendarEvent<JournalEntry>[];
   refreshCalendar = new Subject();
+  selectedDate: Date = new Date();
+  showEventsAccordion: boolean = false;
+  sub = new Subscription();
 
   constructor(private journal: JournalService) {}
 
   ngOnInit() {
-    this.journal
-      .getAllEntries()
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => this.events.push(this.toCalendarEvent(doc.data() as JournalEntry)));
-        this.refreshCalendar.next();
-      });
+    const events$ = this.journal.entries$.pipe(map((entries) => entries.map((entry) => this.toCalendarEvent(entry))));
+    this.sub = events$.subscribe((events) => (this.events = events));
+    if (this.journal.isEmpty()) {
+      this.journal.getAllEntries();
+    }
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 
   private setEventsAccordion(

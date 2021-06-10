@@ -1,5 +1,5 @@
 <div class="row entry-form">
-  <form [formGroup]="entryForm" (ngSubmit)="onCreate(previewEntry)">
+  <form [formGroup]="entryForm" (ngSubmit)="onSubmit(previewEntry)">
     <h1>Create a Journal Entry</h1>
     <mat-form-field>
       <mat-label>Entry's name</mat-label>
@@ -27,7 +27,9 @@
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
-    <button mat-flat-button color="primary" type="submit" [disabled]="!entryForm.valid">Create</button>
+    <button mat-flat-button color="primary" type="submit" [disabled]="!entryForm.valid">
+      {{ editMode ? "Update" : "Create" }}
+    </button>
   </form>
   <div class="container">
     <div class="row preview" *ngIf="showPreview">
