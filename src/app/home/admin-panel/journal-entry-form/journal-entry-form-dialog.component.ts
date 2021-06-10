@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { JournalEntry } from 'src/models/journal-entry.model';
-import { JournalService } from 'src/services/journal.service';
+import { JournalService } from 'src/services/journal/journal.service';
 
 const urlRegex = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*/?';
 

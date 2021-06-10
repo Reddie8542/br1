@@ -2,7 +2,7 @@ import { CalendarMonthViewDay } from 'angular-calendar';
 import * as moment from 'moment';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { FirestoreService } from 'src/services/firestore.service';
-import { JournalService } from 'src/services/journal.service';
+import { JournalService } from 'src/services/journal/journal.service';
 import { CalendarComponent } from './calendar.component';
 
 describe('CalendarComponent', () => {

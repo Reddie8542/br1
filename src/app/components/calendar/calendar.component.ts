@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CalendarEvent, CalendarMonthViewDay, CalendarView } from 'angular-calendar';
 import * as moment from 'moment';
 import { JournalEntry } from 'src/models/journal-entry.model';
-import { JournalService } from 'src/services/journal.service';
+import { JournalService } from 'src/services/journal/journal.service';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 

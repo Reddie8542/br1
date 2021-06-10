@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { JournalEntry } from 'src/models/journal-entry.model';
-import { FirestoreService } from './firestore.service';
+import { FirestoreService } from '../firestore.service';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +45,6 @@ export class JournalService {
   }
 
   getAllEntries(): void {
-    console.log('got all entries!');
     this.firestore
       .getCollection(this.JOURNAL_ENTRIES)
       .orderBy('date', 'asc')

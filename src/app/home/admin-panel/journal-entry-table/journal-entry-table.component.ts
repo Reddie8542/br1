@@ -9,7 +9,7 @@ import {
   ConfirmDialogComponentData,
 } from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { JournalEntry } from 'src/models/journal-entry.model';
-import { JournalService } from 'src/services/journal.service';
+import { JournalService } from 'src/services/journal/journal.service';
 import {
   JournalEntryFormDialogComponent,
   JournalEntryFormDialogComponentData,
