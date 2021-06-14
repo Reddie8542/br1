@@ -67,6 +67,8 @@ export class JournalService {
   updateEntry(entry: JournalEntry) {
     const body = { ...entry } as JournalEntry;
     delete body.id;
-    return this.firestore.updateDocument(this.JOURNAL_ENTRIES, entry.id, body).then(() => this.replaceEntry(entry));
+    return this.firestore
+      .updateDocument(this.JOURNAL_ENTRIES, entry.id as string, body)
+      .then(() => this.replaceEntry(entry));
   }
 }

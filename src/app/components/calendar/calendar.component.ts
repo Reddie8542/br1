@@ -65,7 +65,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   }
 
   onEventClick(e: { event: CalendarEvent<JournalEntry>; sourceEvent: MouseEvent | any }): void {
-    const entryUrl = e.event.meta?.url;
+    const entryUrl = e.event.meta?.url as string;
     window.open(entryUrl, '_blank');
   }
 

@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
+import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal/journal.service';
 
@@ -24,9 +25,11 @@ export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
   editMode = false;
   entryForm!: FormGroup;
   previewEntry: JournalEntry = {
-    name: '',
-    date: '',
-    url: '',
+    id: null,
+    category: null,
+    name: null,
+    date: null,
+    url: null,
   };
   sub: Subscription = new Subscription();
 
@@ -41,6 +44,7 @@ export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.entryForm = this.fb.group({
       id: this.fb.control(null),
+      category: this.fb.control(null),
       name: this.fb.control(null, Validators.required),
       url: this.fb.control(null, [Validators.required, Validators.pattern(urlRegex)]),
       date: this.fb.control(null, Validators.required),
@@ -69,7 +73,13 @@ export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
       .catch((error) => console.error(error));
   }
 
-  onFormChanges(value: { name: string; url: string; date: moment.Moment }) {
+  onFormChanges(value: {
+    name: string;
+    url: string;
+    date: moment.Moment;
+    id: string;
+    category: CalendarEventCategory;
+  }) {
     let date: string = '';
     if (value.date != null) {
       date = value.date.format();
@@ -85,8 +95,8 @@ export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
     }
   }
 
-  onReadNow(url: string) {
-    window.open(url, '_blank');
+  onReadNow(url: string | null | undefined) {
+    window.open(url as string, '_blank');
   }
 
   onUpdate(entry: JournalEntry) {

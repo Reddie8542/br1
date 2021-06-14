@@ -9,6 +9,8 @@ describe('CalendarComponent', () => {
   let component: CalendarComponent;
   const today = moment(new Date());
   const mockEntry: JournalEntry = {
+    id: null,
+    category: null,
     name: 'test',
     url: 'test',
     date: moment().format(),
@@ -49,7 +51,7 @@ describe('CalendarComponent', () => {
     expect(event.resizable?.beforeStart).toBeFalse();
     expect(event.resizable?.afterEnd).toBeFalse();
     expect(event.start).toEqual(moment(mockEntry.date).toDate());
-    expect(event.title).toBe(mockEntry.name);
+    expect(event.title).toBe(mockEntry.name as string);
   });
 
   it('should expand events accordion if events are available for clicked day and it was previously collapsed', () => {
