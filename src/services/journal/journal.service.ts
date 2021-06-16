@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { FirestoreService } from '../firestore.service';
 
@@ -8,7 +9,9 @@ import { FirestoreService } from '../firestore.service';
 })
 export class JournalService {
   private readonly JOURNAL_ENTRIES: string = 'journalEntries';
+  private readonly JOURNAL_CATEGORIES: string = 'journalCategories';
   entries$: BehaviorSubject<JournalEntry[]> = new BehaviorSubject<JournalEntry[]>([]);
+  categories$: BehaviorSubject<CalendarEventCategory[]> = new BehaviorSubject<CalendarEventCategory[]>([]);
 
   constructor(private firestore: FirestoreService) {}
 
@@ -45,8 +48,7 @@ export class JournalService {
   }
 
   getAllEntries(): void {
-    this.firestore
-      .getCollection(this.JOURNAL_ENTRIES)
+    this.fetchAllEntries()
       .orderBy('date', 'asc')
       .get()
       .then((snapshot) => {
@@ -60,8 +62,26 @@ export class JournalService {
       });
   }
 
+  fetchAllEntries() {
+    return this.firestore.getCollection(this.JOURNAL_ENTRIES);
+  }
+
+  fetchAllJournalCategories() {
+    return this.firestore.getCollection(this.JOURNAL_CATEGORIES);
+  }
+
+  getJournalCategory(id: string | null | undefined): CalendarEventCategory {
+    const categories = [...this.categories$.value];
+    const category = categories.find((item) => item.id === id);
+    return { ...category } as CalendarEventCategory;
+  }
+
   isEmpty(): boolean {
     return this.entries$.value.length <= 0;
+  }
+
+  hasCategories(): boolean {
+    return this.categories$.value.length > 0;
   }
 
   updateEntry(entry: JournalEntry) {

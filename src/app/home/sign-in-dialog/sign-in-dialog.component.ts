@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/services/auth.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class SignInDialogComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
-    private dialogRef: MatDialogRef<SignInDialogComponent>
+    private dialogRef: MatDialogRef<SignInDialogComponent>,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -29,7 +31,10 @@ export class SignInDialogComponent implements OnInit {
     const password = this.form.get('password')?.value as string;
     this.authService
       .signIn(username, password)
-      .then(() => this.dialogRef.close())
+      .then(() => {
+        this.dialogRef.close();
+        this.router.navigate(['/admin-panel']);
+      })
       .catch((error) => console.error(error));
   }
 }

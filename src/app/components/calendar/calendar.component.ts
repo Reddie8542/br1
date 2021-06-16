@@ -3,8 +3,9 @@ import { CalendarEvent, CalendarMonthViewDay, CalendarView } from 'angular-calen
 import * as moment from 'moment';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal/journal.service';
-import { Observable, Subject, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { forkJoin, Observable, of, Subject, Subscription } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
+import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 
 const colors: { [name: string]: { primary: string; secondary: string } } = {
   green: {
@@ -13,6 +14,11 @@ const colors: { [name: string]: { primary: string; secondary: string } } = {
   },
 };
 
+export const categories: CalendarEventCategory[] = [
+  { id: null, name: 'journal-entry', color: '#008f26' },
+  { id: null, name: 'writing', color: '#ebc23b' },
+];
+
 @Component({
   selector: 'app-calendar',
   templateUrl: 'calendar.component.html',
@@ -20,7 +26,8 @@ const colors: { [name: string]: { primary: string; secondary: string } } = {
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   calendarView: CalendarView = CalendarView.Month;
-  events!: CalendarEvent<JournalEntry>[];
+  categories!: CalendarEventCategory[];
+  events: CalendarEvent<JournalEntry>[] = [];
   refreshCalendar = new Subject();
   selectedDate: Date = new Date();
   showEventsAccordion: boolean = false;
@@ -29,11 +36,30 @@ export class CalendarComponent implements OnInit, OnDestroy {
   constructor(private journal: JournalService) {}
 
   ngOnInit() {
-    const events$ = this.journal.entries$.pipe(map((entries) => entries.map((entry) => this.toCalendarEvent(entry))));
-    this.sub = events$.subscribe((events) => (this.events = events));
-    if (this.journal.isEmpty()) {
-      this.journal.getAllEntries();
-    }
+    this.journal
+      .fetchAllJournalCategories()
+      .get()
+      .then((snapshot) => {
+        const categories: CalendarEventCategory[] = [];
+        snapshot.forEach((doc) => {
+          const category = doc.data() as CalendarEventCategory;
+          category.id = doc.id;
+          categories.push(category);
+        });
+        this.categories = categories;
+        this.journal
+          .fetchAllEntries()
+          .get()
+          .then((snapshot) => {
+            snapshot.forEach((doc) => {
+              const entry = doc.data() as JournalEntry;
+              entry.id = doc.id;
+              const event = this.toCalendarEvent(entry, categories);
+              this.events.push(event);
+            });
+            this.refreshCalendar.next();
+          });
+      });
   }
 
   ngOnDestroy() {
@@ -69,10 +95,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
     window.open(entryUrl, '_blank');
   }
 
-  toCalendarEvent(entry: JournalEntry): CalendarEvent<JournalEntry> {
+  toCalendarEvent(entry: JournalEntry, categories: CalendarEventCategory[]): CalendarEvent<JournalEntry> {
+    const category = { ...categories.find((item) => item.id === entry.categoryId) } as CalendarEventCategory;
+    const color = { primary: category.color, secondary: category.color };
     return {
       allDay: true,
-      color: colors.green,
+      color,
       draggable: false,
       meta: entry,
       resizable: { beforeStart: false, afterEnd: false },

@@ -5,14 +5,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -31,6 +34,7 @@ import { JournalEntryFormDialogComponent } from './home/admin-panel/journal-entr
 import { JournalEntryTableComponent } from './home/admin-panel/journal-entry-table/journal-entry-table.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { DisplayNamePipe } from 'src/pipes/display-name.pipe';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -42,6 +46,7 @@ export function momentAdapterFactory() {
     AppComponent,
     CalendarComponent,
     ConfirmDialogComponent,
+    DisplayNamePipe,
     HomeComponent,
     JournalComponent,
     JournalEntryFormDialogComponent,
@@ -58,6 +63,7 @@ export function momentAdapterFactory() {
       useFactory: adapterFactory,
     }),
     MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
     MatDatepickerModule,
     MatDialogModule,
@@ -65,8 +71,10 @@ export function momentAdapterFactory() {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatMomentDateModule,
     MatSnackBarModule,
+    MatSelectModule,
     MatTabsModule,
     MatTableModule,
     MatToolbarModule,

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal/journal.service';
@@ -22,11 +22,12 @@ export interface JournalEntryFormDialogComponentData {
 export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
   @Input() showPreview: boolean = false;
 
+  categories$!: Observable<CalendarEventCategory[]>;
   editMode = false;
   entryForm!: FormGroup;
   previewEntry: JournalEntry = {
     id: null,
-    category: null,
+    categoryId: null,
     name: null,
     date: null,
     url: null,
@@ -44,12 +45,16 @@ export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.entryForm = this.fb.group({
       id: this.fb.control(null),
-      category: this.fb.control(null),
+      categoryId: this.fb.control(null),
       name: this.fb.control(null, Validators.required),
       url: this.fb.control(null, [Validators.required, Validators.pattern(urlRegex)]),
       date: this.fb.control(null, Validators.required),
     });
+    this.categories$ = this.journal.categories$.asObservable();
     this.sub.add(this.entryForm.valueChanges.subscribe(this.onFormChanges.bind(this)));
+    if (!this.journal.hasCategories()) {
+      this.journal.fetchAllJournalCategories();
+    }
     this.editMode = this.data != null;
     if (this.editMode) {
       const initValue = this.data.initValue;
@@ -73,13 +78,7 @@ export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
       .catch((error) => console.error(error));
   }
 
-  onFormChanges(value: {
-    name: string;
-    url: string;
-    date: moment.Moment;
-    id: string;
-    category: CalendarEventCategory;
-  }) {
+  onFormChanges(value: { name: string; url: string; date: moment.Moment; id: string; categoryId: string }) {
     let date: string = '';
     if (value.date != null) {
       date = value.date.format();

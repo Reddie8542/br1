@@ -1,78 +1,115 @@
-.actions {
+$dot-size: 12px;
+
+.header {
+  align-items: center;
   display: flex;
   margin-bottom: 10px;
 
-  .calendar-view-btns,
-  .calendar-month {
-    align-items: center;
-    display: flex;
-    flex: 1 1 0;
-  }
-
-  .calendar-month {
-    text-align: center;
-    justify-content: space-around;
-
+  .calendar-info {
     h1 {
+      margin: 14px 0 0 0;
+    }
+
+    h3 {
       margin: 0;
     }
-  }
 
-  .calendar-view-btns {
-    justify-content: center;
+    .category {
+      padding: 0;
 
-    &.container {
-      padding: 5px 0;
+      .row {
+        p {
+          display: inline-block;
+          margin: 0;
+        }
+
+        .dot {
+          border-radius: 50%;
+          display: inline-block;
+          height: $dot-size;
+          width: $dot-size;
+        }
+      }
     }
   }
-}
 
-.container {
-  padding: 5px 15px;
+  .container {
+    padding: 5px 15px;
+  }
 }
 
 /* Mobile */
 @media only screen and (max-width: 600px) {
-  .actions {
+  .header {
     flex-wrap: wrap;
+    justify-content: center;
 
-    .calendar-view-btns,
-    .calendar-month {
-      display: flex;
-      flex: auto;
+    .calendar-info {
       width: 100%;
-    }
 
-    .calendar-view-btns {
-      justify-content: space-around;
+      h1,
+      h3 {
+        text-align: center;
+      }
+
+      .category {
+        display: flex;
+        justify-content: center;
+
+        .row {
+          align-items: center;
+          display: flex;
+          justify-content: space-between;
+          width: 50%;
+        }
+      }
     }
   }
 }
 
 /* Tablet */
 @media only screen and (min-width: 601px) and (max-width: 1200px) {
-  .actions {
-    flex-wrap: wrap;
+  .header {
+    align-items: flex-end;
+    justify-content: space-between;
 
-    .calendar-view-btns,
-    .calendar-month {
-      display: flex;
-      flex: auto;
-      width: 100%;
-    }
+    .calendar-info {
+      flex: 1 1 0;
 
-    .calendar-view-btns {
-      justify-content: space-around;
+      .category {
+        display: flex;
+        justify-content: start;
+
+        .row {
+          align-items: center;
+          display: flex;
+          justify-content: space-between;
+          width: 40%;
+        }
+      }
     }
   }
 }
 
 /* Desktop */
 @media only screen and (min-width: 1201px) and (max-width: 1400px) {
-  .actions {
-    .calendar-view-btns {
-      button {
-        margin: 0 15px;
+  .header {
+    align-items: flex-end;
+    justify-content: space-between;
+
+    .calendar-info {
+      flex: 1 1 0;
+
+      .category {
+        display: flex;
+        justify-content: start;
+
+        .row {
+          align-items: center;
+          display: flex;
+          justify-content: space-between;
+          width: 20%;
+        }
       }
     }
   }
@@ -80,10 +117,23 @@
 
 /* Large Desktop */
 @media only screen and (min-width: 1401px) {
-  .actions {
-    .calendar-view-btns {
-      button {
-        margin: 0 15px;
+  .header {
+    align-items: flex-end;
+    justify-content: space-between;
+
+    .calendar-info {
+      flex: 1 1 0;
+
+      .category {
+        display: flex;
+        justify-content: start;
+
+        .row {
+          align-items: center;
+          display: flex;
+          justify-content: space-between;
+          width: 15%;
+        }
       }
     }
   }

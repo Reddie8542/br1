@@ -6,5 +6,5 @@ export interface JournalEntry {
   name: string | null | undefined;
   date: string | null | undefined;
   url: string | null | undefined;
-  category: CalendarEventCategory | null | undefined;
+  categoryId: string | null | undefined;
 }

@@ -1,4 +1,5 @@
 export interface CalendarEventCategory {
-  id: 'entry' | 'poem' | null | undefined;
-  label: string | null | undefined;
+  id: string | null | undefined;
+  name: 'journal-entry' | 'writing' | null | undefined;
+  color: string | null | undefined;
 }
