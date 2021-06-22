@@ -22,7 +22,7 @@ export interface JournalEntryFormDialogComponentData {
 export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
   @Input() showPreview: boolean = false;
 
-  categories$!: Observable<CalendarEventCategory[]>;
+  categories: CalendarEventCategory[] = [];
   editMode = false;
   entryForm!: FormGroup;
   previewEntry: JournalEntry = {
@@ -50,11 +50,20 @@ export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
       url: this.fb.control(null, [Validators.required, Validators.pattern(urlRegex)]),
       date: this.fb.control(null, Validators.required),
     });
-    this.categories$ = this.journal.categories$.asObservable();
     this.sub.add(this.entryForm.valueChanges.subscribe(this.onFormChanges.bind(this)));
-    if (!this.journal.hasCategories()) {
-      this.journal.fetchAllJournalCategories();
-    }
+    this.journal
+      .fetchAllJournalCategories()
+      .get()
+      .then((snapshot) => {
+        const categories: CalendarEventCategory[] = [];
+        snapshot.forEach((doc) => {
+          const category = doc.data() as CalendarEventCategory;
+          category.id = doc.id;
+          categories.push(category);
+        });
+        this.categories = categories;
+      });
+
     this.editMode = this.data != null;
     if (this.editMode) {
       const initValue = this.data.initValue;
