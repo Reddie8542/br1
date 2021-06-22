@@ -48,9 +48,6 @@ export class JournalEntryTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.journal.entries$.subscribe((entries) => this.tableData.setData(entries));
-    if (this.journal.isEmpty()) {
-      this.journal.getAllEntries();
-    }
   }
 
   ngOnDestroy() {
