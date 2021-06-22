@@ -1,0 +1,44 @@
+h1 {
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
+
+/* Mobile */
+@media only screen and (max-width: 600px) {
+  .container {
+    padding: 8% 8%;
+  }
+
+  .list {
+    width: 90%;
+  }
+}
+
+/* Tablet */
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+  .container {
+    padding: 4% 8%;
+  }
+
+  .list {
+    width: 60%;
+  }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1201px) and (max-width: 1400px) {
+  .list {
+    width: 40%;
+  }
+}
+
+/* Large Desktop */
+@media only screen and (min-width: 1401px) {
+  .list {
+    width: 40%;
+  }
+}

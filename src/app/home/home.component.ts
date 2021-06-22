@@ -14,7 +14,7 @@ interface Tab {
 }
 
 const journalTab: Tab = { label: 'Journal', route: 'journal' };
-const socialTab: Tab = { label: 'Social', route: 'social', disabled: true, disabledMessage: 'In progress...' };
+const socialTab: Tab = { label: 'Social', route: 'social' };
 const adminTab: Tab = { label: 'Admin Panel', route: 'admin-panel' };
 const defaultTabs: Tab[] = [journalTab, socialTab];
 

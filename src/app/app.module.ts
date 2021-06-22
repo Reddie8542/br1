@@ -35,6 +35,7 @@ import { JournalEntryTableComponent } from './home/admin-panel/journal-entry-tab
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DisplayNamePipe } from 'src/pipes/display-name.pipe';
+import { SocialComponent } from './home/social/social.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -53,6 +54,7 @@ export function momentAdapterFactory() {
     JournalEntryTableComponent,
     SafePipe,
     SignInDialogComponent,
+    SocialComponent,
   ],
   imports: [
     AppRoutingModule,
