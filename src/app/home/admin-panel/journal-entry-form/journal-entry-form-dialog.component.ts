@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal/journal.service';
@@ -51,18 +51,7 @@ export class JournalEntryFormDialogComponent implements OnInit, OnDestroy {
       date: this.fb.control(null, Validators.required),
     });
     this.sub.add(this.entryForm.valueChanges.subscribe(this.onFormChanges.bind(this)));
-    this.journal
-      .fetchAllJournalCategories()
-      .get()
-      .then((snapshot) => {
-        const categories: CalendarEventCategory[] = [];
-        snapshot.forEach((doc) => {
-          const category = doc.data() as CalendarEventCategory;
-          category.id = doc.id;
-          categories.push(category);
-        });
-        this.categories = categories;
-      });
+    this.sub.add(this.journal.categories$.subscribe((categories) => (this.categories = categories)));
 
     this.editMode = this.data != null;
     if (this.editMode) {

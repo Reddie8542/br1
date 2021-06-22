@@ -2,8 +2,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, pipe, ReplaySubject, Subscription } from 'rxjs';
-import { filter, take, tap } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 import {
   ConfirmDialogComponent,
   ConfirmDialogComponentData,
@@ -48,9 +48,6 @@ export class JournalEntryTableComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.journal.entries$.subscribe((entries) => this.tableData.setData(entries));
-    if (this.journal.isEmpty()) {
-      this.journal.getAllEntries();
-    }
   }
 
   ngOnDestroy() {

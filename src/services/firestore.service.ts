@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Injectable } from '@angular/core';
+import { collection } from 'rxfire/firestore';
 
 @Injectable({
   providedIn: 'root',
@@ -13,19 +14,27 @@ export class FirestoreService {
   }
 
   addDocument<T>(collectionId: string, document: T) {
-    return this.getCollection(collectionId).add(document);
+    const ref = this.db.collection(collectionId);
+    return ref.add(document);
   }
 
-  deleteDocument(collectionId: string, docId: string) {
-    return this.getCollection(collectionId).doc(docId).delete();
+  deleteDocument<T>(collectionId: string, docId: string) {
+    const ref = this.db.collection(collectionId);
+    return ref.doc(docId).delete();
   }
 
-  getCollection(id: string) {
-    return this.db.collection(id);
+  getCollection(id: string, opts?: { orderBy: { fieldName: string; order: 'asc' | 'desc' } }) {
+    let query: firebase.firestore.Query<firebase.firestore.DocumentData>;
+    query = this.db.collection(id);
+    if (opts != null && opts.orderBy != null) {
+      query = query.orderBy(opts.orderBy.fieldName, opts.orderBy.order);
+    }
+    return collection(query);
   }
 
-  getDocument(collectionId: string, docId: string) {
-    return this.getCollection(collectionId).doc(docId);
+  fetchDocument(collectionId: string, docId: string) {
+    const ref = this.db.collection(collectionId);
+    return ref.doc(docId);
   }
 
   getDocumentByPath(path: string) {
@@ -33,6 +42,7 @@ export class FirestoreService {
   }
 
   updateDocument<T>(collectionId: string, docId: string | undefined, document: T) {
-    return this.getCollection(collectionId).doc(docId).update(document);
+    const ref = this.db.collection(collectionId);
+    return ref.doc(docId).update(document);
   }
 }
