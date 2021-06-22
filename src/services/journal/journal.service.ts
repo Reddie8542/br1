@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 import { JournalEntry } from 'src/models/journal-entry.model';

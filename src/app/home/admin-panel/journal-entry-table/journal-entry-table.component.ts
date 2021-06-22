@@ -2,8 +2,8 @@ import { DataSource } from '@angular/cdk/collections';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, pipe, ReplaySubject, Subscription } from 'rxjs';
-import { filter, take, tap } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 import {
   ConfirmDialogComponent,
   ConfirmDialogComponentData,

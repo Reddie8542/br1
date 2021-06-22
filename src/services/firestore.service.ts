@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import { Injectable } from '@angular/core';
-import { collection, collectionData } from 'rxfire/firestore';
+import { collection } from 'rxfire/firestore';
 
 @Injectable({
   providedIn: 'root',

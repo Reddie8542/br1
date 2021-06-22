@@ -3,8 +3,8 @@ import { CalendarEvent, CalendarMonthViewDay, CalendarView } from 'angular-calen
 import * as moment from 'moment';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal/journal.service';
-import { combineLatest, forkJoin, Observable, of, Subject, Subscription } from 'rxjs';
-import { map, mergeMap, switchMap, take } from 'rxjs/operators';
+import { combineLatest, Subject, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 
 const colors: { [name: string]: { primary: string; secondary: string } } = {

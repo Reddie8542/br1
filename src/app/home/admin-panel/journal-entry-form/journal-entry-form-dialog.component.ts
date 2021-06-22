@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal/journal.service';
