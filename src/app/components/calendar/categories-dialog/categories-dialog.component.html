@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Categories</h1>
+<mat-dialog-content>
+  <div *ngFor="let category of data.categories" class="category">
+    <div class="row">
+      <div class="dot" [ngStyle]="{ backgroundColor: category.color }"></div>
+      <p>{{ category.name | toDisplayName }}</p>
+    </div>
+  </div>
+</mat-dialog-content>

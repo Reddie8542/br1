@@ -1,0 +1,20 @@
+$dot-size: 12px;
+
+.category {
+  padding: 0;
+
+  .row {
+    p {
+      display: inline-block;
+      margin: 0;
+    }
+
+    .dot {
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 15px;
+      height: $dot-size;
+      width: $dot-size;
+    }
+  }
+}

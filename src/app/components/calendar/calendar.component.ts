@@ -6,6 +6,11 @@ import { JournalService } from 'src/services/journal/journal.service';
 import { combineLatest, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import {
+  CategoriesDialogComponent,
+  CategoriesDialogComponentData,
+} from './categories-dialog/categories-dialog.component';
 
 const colors: { [name: string]: { primary: string; secondary: string } } = {
   green: {
@@ -33,7 +38,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   showEventsAccordion: boolean = false;
   sub = new Subscription();
 
-  constructor(private journal: JournalService) {}
+  constructor(private journal: JournalService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.sub.add(
@@ -82,6 +87,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
   onEventClick(e: { event: CalendarEvent<JournalEntry>; sourceEvent: MouseEvent | any }): void {
     const entryUrl = e.event.meta?.url as string;
     window.open(entryUrl, '_blank');
+  }
+
+  onHelp() {
+    const data: CategoriesDialogComponentData = { categories: this.categories };
+    const config: MatDialogConfig<CategoriesDialogComponentData> = { data };
+    this.dialog.open(CategoriesDialogComponent, config);
   }
 
   toCalendarEvent(entry: JournalEntry): CalendarEvent<JournalEntry> {

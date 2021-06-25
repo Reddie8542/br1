@@ -36,6 +36,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { DisplayNamePipe } from 'src/pipes/display-name.pipe';
 import { SocialComponent } from './home/social/social.component';
+import { CategoriesDialogComponent } from './components/calendar/categories-dialog/categories-dialog.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -46,6 +47,7 @@ export function momentAdapterFactory() {
     AdminPanelComponent,
     AppComponent,
     CalendarComponent,
+    CategoriesDialogComponent,
     ConfirmDialogComponent,
     DisplayNamePipe,
     HomeComponent,

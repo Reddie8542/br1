@@ -1,5 +1,3 @@
-$dot-size: 12px;
-
 .header {
   align-items: center;
   display: flex;
@@ -14,23 +12,19 @@ $dot-size: 12px;
       margin: 0;
     }
 
-    .category {
-      padding: 0;
-
-      .row {
-        p {
-          display: inline-block;
-          margin: 0;
-        }
-
-        .dot {
-          border-radius: 50%;
-          display: inline-block;
-          height: $dot-size;
-          width: $dot-size;
-        }
-      }
+    h1 {
+      margin: 0;
     }
+
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  .actions {
+    align-items: center;
+    display: flex;
+    width: 100%;
   }
 
   .container {
@@ -52,17 +46,13 @@ $dot-size: 12px;
         text-align: center;
       }
 
-      .category {
-        display: flex;
-        justify-content: center;
-
-        .row {
-          align-items: center;
-          display: flex;
-          justify-content: space-between;
-          width: 50%;
-        }
+      h1 {
+        font-size: 2em;
       }
+    }
+
+    .actions {
+      justify-content: space-evenly;
     }
   }
 }
@@ -76,16 +66,17 @@ $dot-size: 12px;
     .calendar-info {
       flex: 1 1 0;
 
-      .category {
-        display: flex;
-        justify-content: flex-start;
+      h1 {
+        font-size: 2em;
+      }
+    }
 
-        .row {
-          align-items: center;
-          display: flex;
-          justify-content: space-between;
-          width: 40%;
-        }
+    .actions {
+      flex: 1 1 0;
+      justify-content: flex-end;
+
+      button {
+        margin-left: 15px;
       }
     }
   }
@@ -100,16 +91,17 @@ $dot-size: 12px;
     .calendar-info {
       flex: 1 1 0;
 
-      .category {
-        display: flex;
-        justify-content: flex-start;
+      h1 {
+        font-size: 3em;
+      }
+    }
 
-        .row {
-          align-items: center;
-          display: flex;
-          justify-content: space-between;
-          width: 20%;
-        }
+    .actions {
+      flex: 1 1 0;
+      justify-content: flex-end;
+
+      button {
+        margin-left: 15px;
       }
     }
   }
@@ -124,16 +116,17 @@ $dot-size: 12px;
     .calendar-info {
       flex: 1 1 0;
 
-      .category {
-        display: flex;
-        justify-content: flex-start;
+      h1 {
+        font-size: 3em;
+      }
+    }
 
-        .row {
-          align-items: center;
-          display: flex;
-          justify-content: space-between;
-          width: 15%;
-        }
+    .actions {
+      flex: 1 1 0;
+      justify-content: flex-end;
+
+      button {
+        margin-left: 15px;
       }
     }
   }
