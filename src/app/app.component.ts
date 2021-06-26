@@ -13,6 +13,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     firebase.initializeApp(firebaseConfig);
-    this.firestore.initializeFirestore();
+    this.firestore.setFirestore(firebase.firestore());
   }
 }

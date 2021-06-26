@@ -4,20 +4,27 @@ import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/materia
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { RouterTestingModule } from '@angular/router/testing';
 import * as moment from 'moment';
+import { FirestoreService } from 'src/services/firestore.service';
+import { buildMockCollection } from 'src/utils/test-utils';
 import { JournalEntryFormDialogComponent } from './journal-entry-form-dialog.component';
 
 describe('JournalEntryFormComponent', () => {
+  let firestore: FirestoreService;
   let component: JournalEntryFormDialogComponent;
+  const mockCollection = buildMockCollection([{}]);
 
   beforeEach(async () => {
-    return TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [RouterTestingModule, ReactiveFormsModule, MatDialogModule, MatSnackBarModule],
       declarations: [JournalEntryFormDialogComponent],
       providers: [
+        FirestoreService,
         { provide: MAT_DIALOG_DATA, useValue: {} },
         { provide: MatDialogRef, useValue: {} },
       ],
-    }).compileComponents();
+    });
+    firestore = TestBed.inject(FirestoreService);
+    spyOn(firestore, 'getCollection').and.returnValue(mockCollection);
   });
 
   beforeEach(() => {
@@ -31,10 +38,10 @@ describe('JournalEntryFormComponent', () => {
   });
 
   it('should keep the preview updated with each change in the form', () => {
-    const empty = { name: null, url: null, date: null, id: null, category: null };
+    const empty = { name: null, url: null, date: null, id: null, categoryId: null };
     const mockValue = {
       id: null,
-      category: null,
+      categoryId: null,
       name: 'test',
       url: 'test',
       date: moment(new Date()),

@@ -31,7 +31,7 @@ export const categories: CalendarEventCategory[] = [
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   calendarView: CalendarView = CalendarView.Month;
-  categories!: CalendarEventCategory[];
+  categories: CalendarEventCategory[] = [];
   events: CalendarEvent<JournalEntry>[] = [];
   refreshCalendar = new Subject();
   selectedDate: Date = new Date();

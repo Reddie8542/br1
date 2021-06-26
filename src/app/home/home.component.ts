@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Profile } from 'src/models/profile.model';
 import { AuthService } from 'src/services/auth.service';
@@ -13,9 +12,9 @@ interface Tab {
   disabledMessage?: string;
 }
 
-const journalTab: Tab = { label: 'Journal', route: 'journal' };
-const socialTab: Tab = { label: 'Social', route: 'social' };
-const adminTab: Tab = { label: 'Admin Panel', route: 'admin-panel' };
+export const journalTab: Tab = { label: 'Journal', route: 'journal' };
+export const socialTab: Tab = { label: 'Social', route: 'social' };
+export const adminTab: Tab = { label: 'Admin Panel', route: 'admin-panel' };
 const defaultTabs: Tab[] = [journalTab, socialTab];
 
 @Component({
@@ -33,7 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   tabs: Tab[] = [...defaultTabs];
   sub = new Subscription();
 
-  constructor(public authService: AuthService, private dialog: MatDialog, private router: Router) {}
+  constructor(public authService: AuthService, private dialog: MatDialog) {}
 
   ngOnInit() {
     this.sub = this.authService.authenticated$.subscribe(this.onAuthStateChanges.bind(this));

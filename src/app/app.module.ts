@@ -34,7 +34,7 @@ import { JournalEntryFormDialogComponent } from './home/admin-panel/journal-entr
 import { JournalEntryTableComponent } from './home/admin-panel/journal-entry-table/journal-entry-table.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
-import { DisplayNamePipe } from 'src/pipes/display-name.pipe';
+import { DisplayNamePipe } from 'src/pipes/display-name/display-name.pipe';
 import { SocialComponent } from './home/social/social.component';
 import { CategoriesDialogComponent } from './components/calendar/categories-dialog/categories-dialog.component';
 

@@ -1,16 +1,24 @@
+import { CommonModule } from '@angular/common';
+import { TestBed } from '@angular/core/testing';
+import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CalendarMonthViewDay } from 'angular-calendar';
+import { CalendarDatePipe } from 'angular-calendar/modules/common/calendar-date.pipe';
 import * as moment from 'moment';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { FirestoreService } from 'src/services/firestore.service';
 import { JournalService } from 'src/services/journal/journal.service';
+import { buildMockCollection } from 'src/utils/test-utils';
 import { CalendarComponent } from './calendar.component';
 
 describe('CalendarComponent', () => {
   let component: CalendarComponent;
+  let dialog: MatDialog;
+  let firestore: FirestoreService;
+  let journal: JournalService;
   const today = moment(new Date());
   const mockEntry: JournalEntry = {
     id: null,
-    category: null,
+    categoryId: null,
     name: 'test',
     url: 'test',
     date: moment().format(),
@@ -23,16 +31,23 @@ describe('CalendarComponent', () => {
     isToday: true,
     isFuture: false,
   };
+  const mockCollection = buildMockCollection([{}]);
 
   const isWeekend = (date: moment.Moment) => {
     const day = date.format('dddd');
     return day === 'Sunday' || day === 'Saturday';
   };
 
-  beforeEach(() => {
-    const firestore = new FirestoreService();
-    const journal = new JournalService(firestore);
-    component = new CalendarComponent(journal);
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      providers: [FirestoreService, JournalService],
+    });
+    firestore = TestBed.inject(FirestoreService);
+    spyOn(firestore, 'getCollection').and.returnValue(mockCollection);
+    journal = TestBed.inject(JournalService);
+    dialog = { open: () => {} } as any;
+    component = new CalendarComponent(journal, dialog);
+    spyOn(dialog, 'open');
   });
 
   it('should transform a fetched journal entry to a calendar event', () => {
@@ -120,5 +135,12 @@ describe('CalendarComponent', () => {
     component.onDayClick(e);
     expect(component.showEventsAccordion).toBeTrue();
     expect(component.selectedDate).toEqual(e.day.date);
+  });
+
+  it('should open a dialog when clicking on help', () => {
+    const none = 0;
+    expect(dialog.open).toHaveBeenCalledTimes(none);
+    component.onHelp();
+    expect(dialog.open).toHaveBeenCalledTimes(1);
   });
 });
