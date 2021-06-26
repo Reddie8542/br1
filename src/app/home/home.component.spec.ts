@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
-import { delay } from 'rxjs/operators';
 import { AuthService } from 'src/services/auth.service';
 import { adminTab, HomeComponent } from './home.component';
 
