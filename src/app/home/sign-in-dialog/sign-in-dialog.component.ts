@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/services/auth.service';
+import { AuthService } from 'src/services/auth/auth.service';
 
 @Component({
   selector: 'app-sign-in-dialog',

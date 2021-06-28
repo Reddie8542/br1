@@ -34,6 +34,15 @@ class JournalEntryTableDataSource extends DataSource<JournalEntry> {
   }
 }
 
+const deleteDialogData: MatDialogConfig<ConfirmDialogComponentData> = {
+  data: {
+    title: 'Delete item',
+    message: 'Are you sure you want to delete this item?',
+    confirmButtonLabel: 'Yes, delete it',
+    cancelButtonLabel: 'Cancel',
+  },
+};
+
 @Component({
   selector: 'app-journal-entry-table',
   templateUrl: 'journal-entry-table.component.html',
@@ -52,6 +61,7 @@ export class JournalEntryTableComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.sub.unsubscribe();
+    this.tableData.disconnect();
   }
 
   onCreateEntry(): void {
@@ -59,16 +69,8 @@ export class JournalEntryTableComponent implements OnInit, OnDestroy {
   }
 
   onDeleteEntry(entry: JournalEntry) {
-    const config: MatDialogConfig<ConfirmDialogComponentData> = {
-      data: {
-        title: 'Delete item',
-        message: 'Are you sure you want to delete this item?',
-        confirmButtonLabel: 'Yes, delete it',
-        cancelButtonLabel: 'Cancel',
-      },
-    };
     this.dialog
-      .open<ConfirmDialogComponent, ConfirmDialogComponentData, boolean>(ConfirmDialogComponent, config)
+      .open<ConfirmDialogComponent, ConfirmDialogComponentData, boolean>(ConfirmDialogComponent, deleteDialogData)
       .afterClosed()
       .pipe(
         take(1),
@@ -82,9 +84,7 @@ export class JournalEntryTableComponent implements OnInit, OnDestroy {
   }
 
   onEditEntry(entry: JournalEntry) {
-    const config: MatDialogConfig<JournalEntryFormDialogComponentData> = {
-      data: { initValue: entry },
-    };
+    const config: MatDialogConfig<JournalEntryFormDialogComponentData> = { data: { initValue: entry } };
     this.dialog.open<JournalEntryFormDialogComponent, JournalEntryFormDialogComponentData>(
       JournalEntryFormDialogComponent,
       config

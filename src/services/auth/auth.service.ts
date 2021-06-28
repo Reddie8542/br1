@@ -8,15 +8,19 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  authenticated$ = new BehaviorSubject<boolean>(false);
+  private _authenticated$ = new BehaviorSubject<boolean>(false);
 
   constructor(private router: Router) {}
+
+  get authenticated$() {
+    return this._authenticated$;
+  }
 
   signIn(username: string, password: string) {
     return firebase
       .auth()
       .signInWithEmailAndPassword(username, password)
-      .then(() => this.authenticated$.next(true));
+      .then(() => this._authenticated$.next(true));
   }
 
   signOut() {
@@ -24,7 +28,7 @@ export class AuthService {
       .auth()
       .signOut()
       .then(() => {
-        this.authenticated$.next(false);
+        this._authenticated$.next(false);
         this.router.navigate(['/']);
       });
   }

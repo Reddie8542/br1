@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { Profile } from 'src/models/profile.model';
-import { AuthService } from 'src/services/auth.service';
+import { AuthService } from 'src/services/auth/auth.service';
 import { SignInDialogComponent } from './sign-in-dialog/sign-in-dialog.component';
 
 interface Tab {
