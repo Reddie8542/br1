@@ -1,8 +1,23 @@
-h2 {
-  margin: 16px 0;
+mat-divider {
+  margin-bottom: 15px;
 }
 
 .table-actions {
+  align-items: center;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+mat-table {
+  mat-cell {
+    a {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
 }

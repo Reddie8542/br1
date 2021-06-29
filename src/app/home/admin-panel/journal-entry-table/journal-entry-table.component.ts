@@ -62,7 +62,7 @@ class JournalEntryTableDataSource extends MatTableDataSource<JournalEntry> {
 export class JournalEntryTableComponent implements OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  columns = ['name', 'date', 'url', 'actions'];
+  columns = ['name', 'date', 'actions'];
   entries: JournalEntry[] = [];
   defaultPageSize = 5;
   page: PageEvent = { pageSize: 5, pageIndex: 0 } as PageEvent;
