@@ -1,9 +1,23 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { filter, take } from 'rxjs/operators';
+import {
+  ConfirmDialogComponent,
+  ConfirmDialogComponentData,
+} from 'src/app/components/confirm-dialog/confirm-dialog.component';
 import { TableComponent } from 'src/app/components/table/table.component';
 import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 import { JournalService } from 'src/services/journal/journal.service';
+
+const deleteDialogData: MatDialogConfig<ConfirmDialogComponentData> = {
+  data: {
+    title: 'Delete item',
+    message: 'Are you sure you want to delete this item?',
+    confirmButtonLabel: 'Yes, delete it',
+    cancelButtonLabel: 'Cancel',
+  },
+};
 
 @Component({
   selector: 'app-calendar-event-category-table',
@@ -40,6 +54,17 @@ export class CalendarEventCategoryTableComponent
   }
 
   onDeleteCategory(category: CalendarEventCategory) {
-    console.log('On delete!');
+    this.dialog
+      .open<ConfirmDialogComponent, ConfirmDialogComponentData, boolean>(ConfirmDialogComponent, deleteDialogData)
+      .afterClosed()
+      .pipe(
+        take(1),
+        filter((confirmed) => confirmed != null && confirmed)
+      )
+      .subscribe((confirmed) =>
+        this.journal
+          .deleteCategory(category)
+          .then(() => this.snackbar.open('Category deleted successfully', 'Dismiss', { duration: 3 * 1000 }))
+      );
   }
 }

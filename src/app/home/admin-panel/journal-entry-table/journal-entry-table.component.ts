@@ -1,15 +1,12 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
-import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import {
   ConfirmDialogComponent,
   ConfirmDialogComponentData,
 } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { TableComponent, TableDataSource } from 'src/app/components/table/table.component';
+import { TableComponent } from 'src/app/components/table/table.component';
 import { JournalEntry } from 'src/models/journal-entry.model';
 import { JournalService } from 'src/services/journal/journal.service';
 import {

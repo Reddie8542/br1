@@ -37,6 +37,11 @@ export class JournalService {
     return this.firestore.addDocument(this.JOURNAL_ENTRIES, body);
   }
 
+  deleteCategory(category: CalendarEventCategory) {
+    const id = category.id as string;
+    return this.firestore.deleteDocument(this.JOURNAL_CATEGORIES, id);
+  }
+
   deleteEntry(entry: JournalEntry) {
     const id = entry.id as string;
     return this.firestore.deleteDocument(this.JOURNAL_ENTRIES, id);
