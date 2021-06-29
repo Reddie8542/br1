@@ -32,3 +32,10 @@
   <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
   <mat-row *matRowDef="let item; columns: columns"></mat-row>
 </mat-table>
+<mat-paginator
+  [length]="entries.length"
+  [pageSize]="defaultPageSize"
+  [pageSizeOptions]="pageSizeOptions"
+  showFirstLastButtons
+  (page)="tableData.setPage(entries, $event)"
+></mat-paginator>

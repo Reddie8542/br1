@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HomeComponent } from './home/home.component';
@@ -43,52 +44,56 @@ export function momentAdapterFactory() {
   return adapterFactory(moment);
 }
 
+const components = [
+  AdminPanelComponent,
+  AppComponent,
+  CalendarComponent,
+  CategoriesDialogComponent,
+  ConfirmDialogComponent,
+  HomeComponent,
+  JournalComponent,
+  JournalEntryFormDialogComponent,
+  JournalEntryTableComponent,
+  SignInDialogComponent,
+  SocialComponent,
+];
+
+const pipes = [DisplayNamePipe, SafePipe];
+
+const angularModules = [
+  AppRoutingModule,
+  BrowserModule,
+  BrowserAnimationsModule,
+  CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+  ReactiveFormsModule,
+  CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory }),
+];
+
+const materialModules = [
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatCardModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatDividerModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatInputModule,
+  MatListModule,
+  MatMomentDateModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSnackBarModule,
+  MatSelectModule,
+  MatTabsModule,
+  MatTableModule,
+  MatToolbarModule,
+  MatTooltipModule,
+];
+
 @NgModule({
-  declarations: [
-    AdminPanelComponent,
-    AppComponent,
-    CalendarComponent,
-    CategoriesDialogComponent,
-    ConfirmDialogComponent,
-    DisplayNamePipe,
-    HomeComponent,
-    JournalComponent,
-    JournalEntryFormDialogComponent,
-    JournalEntryTableComponent,
-    SafePipe,
-    SignInDialogComponent,
-    SocialComponent,
-  ],
-  imports: [
-    AppRoutingModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    CalendarModule.forRoot({
-      provide: DateAdapter,
-      useFactory: adapterFactory,
-    }),
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatDividerModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMomentDateModule,
-    MatProgressSpinnerModule,
-    MatSnackBarModule,
-    MatSelectModule,
-    MatTabsModule,
-    MatTableModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    ReactiveFormsModule,
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory }),
-  ],
-  providers: [],
+  declarations: [...components, ...pipes],
+  imports: [...angularModules, ...materialModules],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,8 +1,9 @@
-import { DataSource } from '@angular/cdk/collections';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, ReplaySubject, Subscription } from 'rxjs';
+import { MatTableDataSource } from '@angular/material/table';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter, take } from 'rxjs/operators';
 import {
   ConfirmDialogComponent,
@@ -15,25 +16,6 @@ import {
   JournalEntryFormDialogComponentData,
 } from '../journal-entry-form/journal-entry-form-dialog.component';
 
-class JournalEntryTableDataSource extends DataSource<JournalEntry> {
-  private _entries = new ReplaySubject<JournalEntry[]>();
-
-  constructor(initialData: JournalEntry[]) {
-    super();
-    this.setData(initialData);
-  }
-
-  connect(): Observable<JournalEntry[]> {
-    return this._entries;
-  }
-
-  disconnect() {}
-
-  setData(data: JournalEntry[]) {
-    this._entries.next(data);
-  }
-}
-
 const deleteDialogData: MatDialogConfig<ConfirmDialogComponentData> = {
   data: {
     title: 'Delete item',
@@ -43,20 +25,61 @@ const deleteDialogData: MatDialogConfig<ConfirmDialogComponentData> = {
   },
 };
 
+class JournalEntryTableDataSource extends MatTableDataSource<JournalEntry> {
+  private _entries = new BehaviorSubject<JournalEntry[]>([]);
+
+  constructor(initialData: JournalEntry[]) {
+    super();
+    this.setData(initialData);
+  }
+
+  connect(): BehaviorSubject<JournalEntry[]> {
+    return this._entries;
+  }
+
+  disconnect() {
+    this._entries.complete();
+  }
+
+  setData(data: JournalEntry[]) {
+    this._entries.next(data);
+  }
+
+  setPage(data: JournalEntry[], event: PageEvent) {
+    const clone = [...data];
+    const startIndex = event.pageIndex * event.pageSize;
+    const endIndex = (event.pageIndex + 1) * event.pageSize;
+    const content = clone.slice(startIndex, endIndex);
+    this.setData(content);
+  }
+}
+
 @Component({
   selector: 'app-journal-entry-table',
   templateUrl: 'journal-entry-table.component.html',
   styleUrls: ['journal-entry-table.component.scss'],
 })
-export class JournalEntryTableComponent implements OnInit, OnDestroy {
+export class JournalEntryTableComponent implements OnDestroy, AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   columns = ['name', 'date', 'url', 'actions'];
+  defaultPageSize = 5;
+  entries: JournalEntry[] = [];
+  pageSizeOptions = [this.defaultPageSize, 10, 20];
   tableData = new JournalEntryTableDataSource([]);
   sub = new Subscription();
 
   constructor(private dialog: MatDialog, private journal: JournalService, private snackbar: MatSnackBar) {}
 
-  ngOnInit() {
-    this.sub = this.journal.entries$.subscribe((entries) => this.tableData.setData(entries));
+  ngAfterViewInit() {
+    this.tableData.paginator = this.paginator;
+    this.sub.add(
+      this.journal.entries$.subscribe((entries) => {
+        this.entries = entries;
+        const firstPage = { pageSize: this.defaultPageSize, pageIndex: 0 } as PageEvent;
+        this.tableData.setPage(entries, firstPage);
+      })
+    );
   }
 
   ngOnDestroy() {
