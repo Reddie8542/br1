@@ -1,26 +1,24 @@
 <div class="row">
   <div class="table-actions">
-    <h2>Entries</h2>
-    <button mat-raised-button color="primary" (click)="onCreateEntry()">Create Entry</button>
+    <h2>Calendar Event Categories</h2>
+    <button mat-raised-button color="primary" (click)="onCreateCategory()">Create Category</button>
   </div>
 </div>
 <mat-table [dataSource]="tableData">
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-    <mat-cell *matCellDef="let item">
-      <a [href]="item.url" target="_blank">{{ item.name }}</a>
-    </mat-cell>
+    <mat-cell *matCellDef="let item">{{ item.name | toDisplayName }}</mat-cell>
   </ng-container>
-  <ng-container matColumnDef="date">
-    <mat-header-cell *matHeaderCellDef>Date</mat-header-cell>
-    <mat-cell *matCellDef="let item">{{ item.date | date: "shortDate" }}</mat-cell>
+  <ng-container matColumnDef="color">
+    <mat-header-cell *matHeaderCellDef>Color</mat-header-cell>
+    <mat-cell *matCellDef="let item">{{ item.color }}</mat-cell>
   </ng-container>
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
     <mat-cell *matCellDef="let item">
       <div>
-        <button mat-icon-button color="primary" (click)="onEditEntry(item)"><mat-icon>edit</mat-icon></button>
-        <button mat-icon-button color="warn" (click)="onDeleteEntry(item)"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button color="primary" (click)="onEditCategory(item)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="onDeleteCategory(item)"><mat-icon>delete</mat-icon></button>
       </div>
     </mat-cell>
   </ng-container>

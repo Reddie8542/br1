@@ -39,6 +39,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { DisplayNamePipe } from 'src/pipes/display-name/display-name.pipe';
 import { SocialComponent } from './home/social/social.component';
 import { CategoriesDialogComponent } from './components/calendar/categories-dialog/categories-dialog.component';
+import { CalendarEventCategoryTableComponent } from './home/admin-panel/calendar-event-category-table/calendar-event-category-table.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -48,6 +49,7 @@ const components = [
   AdminPanelComponent,
   AppComponent,
   CalendarComponent,
+  CalendarEventCategoryTableComponent,
   CategoriesDialogComponent,
   ConfirmDialogComponent,
   HomeComponent,
