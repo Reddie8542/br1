@@ -63,8 +63,9 @@ export class JournalEntryTableComponent implements OnDestroy, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   columns = ['name', 'date', 'url', 'actions'];
-  defaultPageSize = 5;
   entries: JournalEntry[] = [];
+  defaultPageSize = 5;
+  page: PageEvent = { pageSize: 5, pageIndex: 0 } as PageEvent;
   pageSizeOptions = [this.defaultPageSize, 10, 20];
   tableData = new JournalEntryTableDataSource([]);
   sub = new Subscription();
@@ -76,8 +77,7 @@ export class JournalEntryTableComponent implements OnDestroy, AfterViewInit {
     this.sub.add(
       this.journal.entries$.subscribe((entries) => {
         this.entries = entries;
-        const firstPage = { pageSize: this.defaultPageSize, pageIndex: 0 } as PageEvent;
-        this.tableData.setPage(entries, firstPage);
+        this.tableData.setPage(entries, this.page);
       })
     );
   }
@@ -112,5 +112,10 @@ export class JournalEntryTableComponent implements OnDestroy, AfterViewInit {
       JournalEntryFormDialogComponent,
       config
     );
+  }
+
+  onPageChange(page: PageEvent) {
+    this.page = page;
+    this.tableData.setPage(this.entries, page);
   }
 }
