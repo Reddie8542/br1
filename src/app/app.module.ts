@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -77,6 +78,7 @@ export function momentAdapterFactory() {
     MatInputModule,
     MatListModule,
     MatMomentDateModule,
+    MatProgressSpinnerModule,
     MatSnackBarModule,
     MatSelectModule,
     MatTabsModule,

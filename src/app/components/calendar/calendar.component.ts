@@ -33,6 +33,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   calendarView: CalendarView = CalendarView.Month;
   categories: CalendarEventCategory[] = [];
   events: CalendarEvent<JournalEntry>[] = [];
+  loading = true;
   refreshCalendar = new Subject();
   selectedDate: Date = new Date();
   showEventsAccordion: boolean = false;
@@ -50,6 +51,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe((events) => {
+          this.loading = false;
           this.events = [...events];
           this.refreshCalendar.next();
         })

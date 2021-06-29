@@ -1,42 +1,47 @@
-<div class="row">
-  <div class="row header">
-    <div class="container calendar-info">
-      <h1>{{ selectedDate | calendarDate: calendarView + "ViewTitle":"en" }}</h1>
+<div class="row" [class.spinner]="loading">
+  <ng-container *ngIf="!loading; else spinner">
+    <div class="row header">
+      <div class="container calendar-info">
+        <h1>{{ selectedDate | calendarDate: calendarView + "ViewTitle":"en" }}</h1>
+      </div>
+      <div class="actions">
+        <mat-button-toggle-group>
+          <mat-button-toggle
+            mwlCalendarPreviousView
+            [view]="calendarView"
+            [(viewDate)]="selectedDate"
+            (viewDateChange)="showEventsAccordion = false"
+          >
+            <mat-icon>arrow_left</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle mwlCalendarToday [(viewDate)]="selectedDate">Today</mat-button-toggle>
+          <mat-button-toggle
+            mwlCalendarNextView
+            [view]="calendarView"
+            [(viewDate)]="selectedDate"
+            (viewDateChange)="showEventsAccordion = false"
+          >
+            <mat-icon>arrow_right</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+        <button mat-mini-fab color="basic" (click)="onHelp()">
+          <mat-icon>help_outline</mat-icon>
+        </button>
+      </div>
     </div>
-    <div class="actions">
-      <mat-button-toggle-group>
-        <mat-button-toggle
-          mwlCalendarPreviousView
-          [view]="calendarView"
-          [(viewDate)]="selectedDate"
-          (viewDateChange)="showEventsAccordion = false"
-        >
-          <mat-icon>arrow_left</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle mwlCalendarToday [(viewDate)]="selectedDate">Today</mat-button-toggle>
-        <mat-button-toggle
-          mwlCalendarNextView
-          [view]="calendarView"
-          [(viewDate)]="selectedDate"
-          (viewDateChange)="showEventsAccordion = false"
-        >
-          <mat-icon>arrow_right</mat-icon>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
-      <button mat-mini-fab color="basic" (click)="onHelp()">
-        <mat-icon>help_outline</mat-icon>
-      </button>
+    <div>
+      <mwl-calendar-month-view
+        [activeDayIsOpen]="showEventsAccordion"
+        [events]="events"
+        [viewDate]="selectedDate"
+        [refresh]="refreshCalendar"
+        (dayClicked)="onDayClick($event)"
+        (eventClicked)="onEventClick($event)"
+      >
+      </mwl-calendar-month-view>
     </div>
-  </div>
-  <div>
-    <mwl-calendar-month-view
-      [activeDayIsOpen]="showEventsAccordion"
-      [events]="events"
-      [viewDate]="selectedDate"
-      [refresh]="refreshCalendar"
-      (dayClicked)="onDayClick($event)"
-      (eventClicked)="onEventClick($event)"
-    >
-    </mwl-calendar-month-view>
-  </div>
+  </ng-container>
+  <ng-template #spinner>
+    <mat-spinner></mat-spinner>
+  </ng-template>
 </div>
