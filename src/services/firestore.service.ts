@@ -9,19 +9,26 @@ import { collection } from 'rxfire/firestore';
 export class FirestoreService {
   private firestore!: firebase.firestore.Firestore;
 
-  addDocument<T>(collectionId: string, document: T) {
-    const ref = this.firestore.collection(collectionId);
-    return ref.add(document);
+  private preparePayload<T>(body: T | null | undefined): T {
+    const clone = { ...body } as any;
+    delete clone.id;
+    return clone as T;
   }
 
-  deleteDocument<T>(collectionId: string, docId: string) {
-    const ref = this.firestore.collection(collectionId);
-    return ref.doc(docId).delete();
+  addDocument<T>(collectionId: string, document: T) {
+    const collection = this.firestore.collection(collectionId);
+    const body = this.preparePayload<T>(document);
+    return collection.add(body);
+  }
+
+  deleteDocument(collectionId: string, docId: string) {
+    const collection = this.firestore.collection(collectionId);
+    return collection.doc(docId).delete();
   }
 
   fetchDocument(collectionId: string, docId: string) {
-    const ref = this.firestore.collection(collectionId);
-    return ref.doc(docId);
+    const collection = this.firestore.collection(collectionId);
+    return collection.doc(docId);
   }
 
   getCollection(id: string, opts?: { orderBy: { fieldName: string; order: 'asc' | 'desc' } }) {
@@ -41,8 +48,9 @@ export class FirestoreService {
     this.firestore = firestore;
   }
 
-  updateDocument<T>(collectionId: string, docId: string | undefined, document: T) {
-    const ref = this.firestore.collection(collectionId);
-    return ref.doc(docId).update(document);
+  updateDocument<T>(collectionId: string, document: T) {
+    const collection = this.firestore.collection(collectionId);
+    const body = this.preparePayload<T>(document);
+    return collection.doc((document as any).id).update(body);
   }
 }

@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private _authenticated$ = new BehaviorSubject<boolean>(false);
+  private _authenticated$ = new BehaviorSubject<boolean>(true);
 
   constructor(private router: Router) {}
 

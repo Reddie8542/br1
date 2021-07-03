@@ -31,10 +31,12 @@ export class JournalService {
 
   constructor(private firestore: FirestoreService) {}
 
+  createCategory(category: CalendarEventCategory) {
+    return this.firestore.addDocument<CalendarEventCategory>(this.JOURNAL_CATEGORIES, category);
+  }
+
   createEntry(entry: JournalEntry) {
-    const body = { ...entry } as JournalEntry;
-    delete body.id;
-    return this.firestore.addDocument(this.JOURNAL_ENTRIES, body);
+    return this.firestore.addDocument<JournalEntry>(this.JOURNAL_ENTRIES, entry);
   }
 
   deleteCategory(category: CalendarEventCategory) {
@@ -47,9 +49,11 @@ export class JournalService {
     return this.firestore.deleteDocument(this.JOURNAL_ENTRIES, id);
   }
 
+  updateCategory(category: CalendarEventCategory) {
+    return this.firestore.updateDocument<CalendarEventCategory>(this.JOURNAL_CATEGORIES, category);
+  }
+
   updateEntry(entry: JournalEntry) {
-    const body = { ...entry } as JournalEntry;
-    delete body.id;
-    return this.firestore.updateDocument(this.JOURNAL_ENTRIES, entry.id as string, body);
+    return this.firestore.updateDocument<JournalEntry>(this.JOURNAL_ENTRIES, entry);
   }
 }

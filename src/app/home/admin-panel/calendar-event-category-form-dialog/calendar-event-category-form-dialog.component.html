@@ -1,0 +1,23 @@
+<div class="row entry-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+    <h1>Create a Journal Category</h1>
+    <mat-form-field>
+      <mat-label>Category name</mat-label>
+      <input matInput formControlName="name" placeholder="Please type a name for the category" />
+      <mat-hint *ngIf="form.get('name')?.touched && form.get('name')?.errors?.required">
+        Category name is required
+      </mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Category color</mat-label>
+      <input matInput formControlName="color" placeholder="Please type a color for the category" />
+      <span matSuffix class="dot" [ngStyle]="{ backgroundColor: form.value.color }"></span>
+      <mat-hint *ngIf="form.get('color')?.touched && form.get('color')?.errors?.required">
+        Category color is required
+      </mat-hint>
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit" [disabled]="!form.valid">
+      {{ editMode ? "Update" : "Create" }}
+    </button>
+  </form>
+</div>

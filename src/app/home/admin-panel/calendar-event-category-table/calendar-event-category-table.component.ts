@@ -9,6 +9,10 @@ import {
 import { TableComponent } from 'src/app/components/table/table.component';
 import { CalendarEventCategory } from 'src/models/calendar-event-category.model';
 import { JournalService } from 'src/services/journal/journal.service';
+import {
+  CalendarEventCategoryFormDialogComponent,
+  CalendarEventCategoryFormDialogComponentData,
+} from '../calendar-event-category-form-dialog/calendar-event-category-form-dialog.component';
 
 const deleteDialogData: MatDialogConfig<ConfirmDialogComponentData> = {
   data: {
@@ -46,11 +50,12 @@ export class CalendarEventCategoryTableComponent
   }
 
   onCreateCategory() {
-    console.log('On create!');
+    this.dialog.open(CalendarEventCategoryFormDialogComponent);
   }
 
   onEditCategory(category: CalendarEventCategory) {
-    console.log('On edit!');
+    const config: MatDialogConfig<CalendarEventCategoryFormDialogComponentData> = { data: { initValue: category } };
+    this.dialog.open(CalendarEventCategoryFormDialogComponent, config);
   }
 
   onDeleteCategory(category: CalendarEventCategory) {

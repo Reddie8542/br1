@@ -1,3 +1,5 @@
+$dot-size: 12px;
+
 .table-actions {
   align-items: center;
   display: flex;
@@ -6,4 +8,11 @@
   h2 {
     margin: 0;
   }
+}
+
+.dot {
+  display: inline-block;
+  margin-right: 15px;
+  height: $dot-size;
+  width: $dot-size;
 }
