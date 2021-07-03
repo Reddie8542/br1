@@ -12,9 +12,9 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     children: [
-      { path: '', redirectTo: 'admin-panel', pathMatch: 'full' },
+      { path: '', redirectTo: 'journal', pathMatch: 'full' },
       { path: 'journal', component: JournalComponent },
-      { path: 'admin-panel', component: AdminPanelComponent /*canActivate: [AuthGuard]*/ },
+      { path: 'admin-panel', component: AdminPanelComponent, canActivate: [AuthGuard] },
       { path: 'social', component: SocialComponent },
     ],
   },
