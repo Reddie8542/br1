@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private _authenticated$ = new BehaviorSubject<boolean>(firebase.auth().currentUser != null);
+  private _authenticated$ = new BehaviorSubject<boolean>(false);
 
   constructor(private router: Router) {}
 

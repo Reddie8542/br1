@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Router, UrlTree } from '@angular/router';
+import { UrlTree } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthService } from 'src/services/auth/auth.service';

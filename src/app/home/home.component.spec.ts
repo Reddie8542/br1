@@ -6,25 +6,17 @@ import { adminTab, HomeComponent } from './home.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
-  let auth: AuthService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, MatDialogModule],
       declarations: [HomeComponent],
       providers: [
-        AuthService,
-        {
-          provide: MAT_DIALOG_DATA,
-          useValue: {},
-        },
-        {
-          provide: MatDialogRef,
-          useValue: {},
-        },
+        { provide: AuthService, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} },
       ],
     });
-    auth = TestBed.inject(AuthService);
     component = TestBed.createComponent(HomeComponent).componentInstance;
   });
 
