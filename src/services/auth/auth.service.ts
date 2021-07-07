@@ -13,7 +13,7 @@ export class AuthService {
   constructor(private router: Router) {}
 
   get authenticated$() {
-    return this._authenticated$;
+    return this._authenticated$.asObservable();
   }
 
   signIn(username: string, password: string) {
