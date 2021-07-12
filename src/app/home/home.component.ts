@@ -12,10 +12,11 @@ interface Tab {
   disabledMessage?: string;
 }
 
+export const aboutMeTab: Tab = { label: 'About Me', route: 'about-me' };
 export const journalTab: Tab = { label: 'Journal', route: 'journal' };
 export const socialTab: Tab = { label: 'Social', route: 'social' };
 export const adminTab: Tab = { label: 'Admin Panel', route: 'admin-panel' };
-const defaultTabs: Tab[] = [journalTab, socialTab];
+const defaultTabs: Tab[] = [aboutMeTab, journalTab, socialTab];
 
 @Component({
   selector: 'app-home',

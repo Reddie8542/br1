@@ -41,12 +41,14 @@ import { SocialComponent } from './home/social/social.component';
 import { CategoriesDialogComponent } from './components/calendar/categories-dialog/categories-dialog.component';
 import { CalendarEventCategoryTableComponent } from './home/admin-panel/calendar-event-category-table/calendar-event-category-table.component';
 import { CalendarEventCategoryFormDialogComponent } from './home/admin-panel/calendar-event-category-form-dialog/calendar-event-category-form-dialog.component';
+import { AboutMeComponent } from './home/about-me/about-me.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
 }
 
 const components = [
+  AboutMeComponent,
   AdminPanelComponent,
   AppComponent,
   CalendarComponent,
