@@ -3,26 +3,23 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 
-@Component({
-  selector: 'app-table',
-  template: '',
-})
+@Component({ template: '' })
 export class TableComponent<R> implements AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  private _records$!: Observable<R[]>;
 
   columns: string[] = [];
-  records: R[] = [];
-  records$!: Observable<R[]>;
   defaultPageSize = 5;
   page: PageEvent = { pageSize: 5, pageIndex: 0 } as PageEvent;
   pageSizeOptions = [this.defaultPageSize, 10, 20];
-  tableData = new TableDataSource<R>([]);
   sub = new Subscription();
+  tableData = new TableDataSource<R>([]);
+  records: R[] = [];
 
   ngAfterViewInit() {
     this.tableData.paginator = this.paginator;
     this.sub.add(
-      this.records$.subscribe((records) => {
+      this._records$.subscribe((records) => {
         this.records = records;
         this.tableData.setPage(records, this.page);
       })
@@ -36,7 +33,12 @@ export class TableComponent<R> implements AfterViewInit, OnDestroy {
 
   onPageChange(page: PageEvent) {
     this.page = page;
-    this.tableData.setPage(this.records, page);
+    const snapshot = [...this.records];
+    this.tableData.setPage(snapshot, page);
+  }
+
+  setRecordsObservable(observable: Observable<R[]>) {
+    this._records$ = observable;
   }
 }
 
@@ -48,6 +50,10 @@ export class TableDataSource<R> extends MatTableDataSource<R> {
     this.setData(initialRecords);
   }
 
+  get length() {
+    return this._records.value.length;
+  }
+
   connect(): BehaviorSubject<R[]> {
     return this._records;
   }
@@ -56,15 +62,18 @@ export class TableDataSource<R> extends MatTableDataSource<R> {
     this._records.complete();
   }
 
+  getData() {
+    return [...this._records.value];
+  }
+
   setData(records: R[]) {
     this._records.next(records);
   }
 
-  setPage(records: R[], page: PageEvent) {
-    const clone = [...records];
+  setPage(recordsSnapshot: R[], page: PageEvent) {
     const startIndex = page.pageIndex * page.pageSize;
     const endIndex = (page.pageIndex + 1) * page.pageSize;
-    const content = clone.slice(startIndex, endIndex);
+    const content = recordsSnapshot.slice(startIndex, endIndex);
     this.setData(content);
   }
 }

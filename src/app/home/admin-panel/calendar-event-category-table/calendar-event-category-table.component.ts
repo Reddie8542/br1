@@ -38,7 +38,7 @@ export class CalendarEventCategoryTableComponent
 
   ngOnInit() {
     this.columns = ['name', 'color', 'actions'];
-    this.records$ = this.journal.categories$;
+    this.setRecordsObservable(this.journal.categories$);
   }
 
   ngAfterViewInit() {

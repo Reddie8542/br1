@@ -38,7 +38,7 @@ export class JournalEntryTableComponent
 
   ngOnInit() {
     this.columns = ['name', 'date', 'actions'];
-    this.records$ = this.journal.entries$;
+    this.setRecordsObservable(this.journal.entries$);
   }
 
   ngAfterViewInit() {
