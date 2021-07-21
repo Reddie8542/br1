@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Profile } from 'src/models/profile.model';
 import { AuthService } from 'src/services/auth/auth.service';
@@ -36,7 +37,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   tabs: Tab[] = [...defaultTabs];
   sub = new Subscription();
 
-  constructor(public authService: AuthService, private dialog: MatDialog, private storage: StorageService) {}
+  constructor(
+    public authService: AuthService,
+    private dialog: MatDialog,
+    private router: Router,
+    private storage: StorageService
+  ) {}
 
   ngOnInit() {
     this.sub = this.authService.authenticated$.subscribe(this.onAuthStateChanges.bind(this));
@@ -55,6 +61,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.tabs = [...defaultTabs];
     if (authenticated) {
       this.tabs.push(adminTab);
+      this.router.navigate(['/admin-panel']);
     }
   }
 

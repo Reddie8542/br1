@@ -31,10 +31,7 @@ export class SignInDialogComponent implements OnInit {
     const password = this.form.get('password')?.value as string;
     this.authService
       .signIn(username, password)
-      .then(() => {
-        this.dialogRef.close();
-        this.router.navigate(['/admin-panel']);
-      })
+      .then(() => this.dialogRef.close())
       .catch((error) => console.error(error));
   }
 }
