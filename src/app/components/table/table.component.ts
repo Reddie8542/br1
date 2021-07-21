@@ -9,9 +9,9 @@ export class TableComponent<R> implements AfterViewInit, OnDestroy {
   private _records$!: Observable<R[]>;
 
   columns: string[] = [];
-  defaultPageSize = 5;
   page: PageEvent = { pageSize: 5, pageIndex: 0 } as PageEvent;
-  pageSizeOptions = [this.defaultPageSize, 10, 20];
+  pageSize = 5;
+  pageSizeOptions = [5, 10, 20];
   sub = new Subscription();
   tableData = new TableDataSource<R>([]);
   records: R[] = [];
@@ -50,8 +50,8 @@ export class TableDataSource<R> extends MatTableDataSource<R> {
     this.setData(initialRecords);
   }
 
-  get length() {
-    return this._records.value.length;
+  private setData(records: R[]) {
+    this._records.next(records);
   }
 
   connect(): BehaviorSubject<R[]> {
@@ -60,14 +60,6 @@ export class TableDataSource<R> extends MatTableDataSource<R> {
 
   disconnect() {
     this._records.complete();
-  }
-
-  getData() {
-    return [...this._records.value];
-  }
-
-  setData(records: R[]) {
-    this._records.next(records);
   }
 
   setPage(recordsSnapshot: R[], page: PageEvent) {
