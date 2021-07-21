@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Profile } from 'src/models/profile.model';
 import { AuthService } from 'src/services/auth/auth.service';
+import { StorageService } from 'src/services/storage.service';
 import { SignInDialogComponent } from './sign-in-dialog/sign-in-dialog.component';
 
 interface Tab {
@@ -29,14 +30,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     lastname: 'Alva',
     description:
       'Me gustaría no dejarte vacía - pequeña amiga "descripción" - pero al mismo tiempo no se me ocurre qué escribir...',
+    profilePicName: 'profilePic-min.jpg',
   };
+  profilePicUrl$!: Observable<string>;
   tabs: Tab[] = [...defaultTabs];
   sub = new Subscription();
 
-  constructor(public authService: AuthService, private dialog: MatDialog) {}
+  constructor(public authService: AuthService, private dialog: MatDialog, private storage: StorageService) {}
 
   ngOnInit() {
     this.sub = this.authService.authenticated$.subscribe(this.onAuthStateChanges.bind(this));
+    this.profilePicUrl$ = this.storage.getImageURL(this.profile.profilePicName);
   }
 
   ngOnDestroy() {

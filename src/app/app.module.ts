@@ -42,6 +42,7 @@ import { CategoriesDialogComponent } from './components/calendar/categories-dial
 import { CalendarEventCategoryTableComponent } from './home/admin-panel/calendar-event-category-table/calendar-event-category-table.component';
 import { CalendarEventCategoryFormDialogComponent } from './home/admin-panel/calendar-event-category-form-dialog/calendar-event-category-form-dialog.component';
 import { AboutMeComponent } from './home/about-me/about-me.component';
+import { HttpClientModule } from '@angular/common/http';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -73,6 +74,7 @@ const angularModules = [
   CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
   ReactiveFormsModule,
   CalendarModule.forRoot({ provide: DateAdapter, useFactory: momentAdapterFactory }),
+  HttpClientModule,
 ];
 
 const materialModules = [
