@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/storage';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { from, Observable } from 'rxjs';
+import { from } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
