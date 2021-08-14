@@ -43,6 +43,7 @@ import { CalendarEventCategoryTableComponent } from './home/admin-panel/calendar
 import { CalendarEventCategoryFormDialogComponent } from './home/admin-panel/calendar-event-category-form-dialog/calendar-event-category-form-dialog.component';
 import { AboutMeComponent } from './home/about-me/about-me.component';
 import { HttpClientModule } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
 
 export function momentAdapterFactory() {
   return adapterFactory(moment);
@@ -57,6 +58,7 @@ const components = [
   CalendarEventCategoryFormDialogComponent,
   CategoriesDialogComponent,
   ConfirmDialogComponent,
+  HeaderComponent,
   HomeComponent,
   JournalComponent,
   JournalEntryFormDialogComponent,

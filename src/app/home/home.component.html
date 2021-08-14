@@ -1,20 +1,4 @@
-<header>
-  <mat-toolbar>
-    <!-- <span>Br1</span> -->
-    <span class="spacer"></span>
-    <button
-      *ngIf="!(authService.authenticated$ | async); else signOut"
-      mat-button
-      aria-label="Sign in"
-      (click)="onSignIn()"
-    >
-      Sign In
-    </button>
-    <ng-template #signOut>
-      <button mat-button aria-label="Sign Out" (click)="onSignOut()">Sign Out</button>
-    </ng-template>
-  </mat-toolbar>
-</header>
+<app-header></app-header>
 <main class="container">
   <div class="row center">
     <div class="profile-picture">
